@@ -73,8 +73,9 @@ If you want to work with customly aquired environmental data, make sure you put 
 
 #### Suggested Download Tool FAIRiCUBE QueryCube
 
-[QueryCube GitHub Repository](https://github.com/FAIRiCUBE/uc3-drosophola-genetics/tree/main/projects/QueryCube)
-[QueryCube Web Application](https://querycube.nilu.no/)
+- [QueryCube GitHub Repository](https://github.com/FAIRiCUBE/uc3-drosophola-genetics/tree/main/projects/QueryCube)
+
+- [QueryCube Web Application](https://querycube.nilu.no/)
 
 
 
