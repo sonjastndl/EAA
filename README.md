@@ -7,12 +7,17 @@
 
 ##  Table of Contents
 
+<!--ts-->
+
 1. [About the Repository](#about-the-repository)
 2. [Hypothesis](#hypothesis)
 3. [Novel Aspects](#novel-aspects)
 4. [Data](#data)
+   * [Environemntal Data](#environmental-data)
 5. [Project Workflow](#project-workflow)
 6. [Results](#results)
+
+<!--ts-->
 
 
 ## About the Repository
