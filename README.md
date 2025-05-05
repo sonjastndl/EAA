@@ -93,8 +93,10 @@ Here are some of the key features of this project:
 ## Results
 
 
+### Test First PLot
+![Correlation of Environemtnal Variables](results/RDA/partialRDA/plot/CorrelationEnv.png)
 
-### Resources
+## Resources
 
 Make sure you have the following installed:
 
