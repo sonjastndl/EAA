@@ -61,30 +61,6 @@ We are now interested in whether incorporating more populations, richer environm
 
 ## Data
 
-### Genetic Data
-
-This project is working with population samples from the model organism Drosophila melanogaster.
-
-#### Download Genomic Data
-
-The download is part of the [EAA script](shell/EAA.sh) of the main pipeline. The data on geolocation of Drosohila melanogaster samples togehter with the according metadata, as well as the genetic data as VCF can be retrieved via DEST.bio.
-Please be aware that these specific VCFs are large files and therefore download might take longer as usual. 
-
-
-```bash
-wget --tries=inf "http://berglandlab.uvadcos.io/gds/dest.all.PoolSNP.001.50.25Feb2023.norep.vcf.gz"
-wget "https://raw.githubusercontent.com/DEST-bio/DESTv2/main/populationInfo/dest_v2.samps_3May2024.csv"
-wget http://ftp.flybase.net/genomes/Drosophila_melanogaster/current/gff/dmel-all-r6.57.gff.gz
-
-
-## Extract the information on the available samples
-awk '{FS=","}{if (NR!=1) {print $1}}' dest_v2.samps_3May2024.csv > ${data}/samplenames.csv
-cp dest.all.PoolSNP.001.50.25Feb2023.norep.vcf.gz ${data}/PoolSeq2024.vcf.gz
-mv  dmel-all-r6.57.gff.gz > ${data}/dmel-all-r6.57.gff.gz
-
-```
-
-
 ### Environmental Data
 
 
@@ -123,6 +99,74 @@ The environmental data used in this project consists of the following:
 - [Code to Access and Download CDS](scripts/getCDSdata.py): <br>
   Please make sure to register at the CDS Website and agree to terms of condition of ERA5 dataset when downloading. 
 
+
+### Genomic Data
+
+This project is working with population samples from the model organism Drosophila melanogaster.
+
+#### Download Genomic Data And Metadata
+
+The download is part of the [EAA script](shell/EAA.sh) of the main pipeline. The data on geolocation of Drosohila melanogaster samples togehter with the according metadata, as well as the genetic data as VCF can be retrieved via DEST.bio.
+Please be aware that these specific VCFs are large files and therefore download might take longer as usual. 
+
+
+```bash
+wget --tries=inf "http://berglandlab.uvadcos.io/gds/dest.all.PoolSNP.001.50.25Feb2023.norep.vcf.gz"
+wget "https://raw.githubusercontent.com/DEST-bio/DESTv2/main/populationInfo/dest_v2.samps_3May2024.csv"
+wget http://ftp.flybase.net/genomes/Drosophila_melanogaster/current/gff/dmel-all-r6.57.gff.gz
+
+
+## Extract the information on the available samples
+awk '{FS=","}{if (NR!=1) {print $1}}' dest_v2.samps_3May2024.csv > ${data}/samplenames.csv
+cp dest.all.PoolSNP.001.50.25Feb2023.norep.vcf.gz ${data}/PoolSeq2024.vcf.gz
+mv  dmel-all-r6.57.gff.gz > ${data}/dmel-all-r6.57.gff.gz
+
+```
+
+#### Additional Genomic Data
+
+Later in the workflow, estimates for population structure and gene annotations will be used. We used FlyBase and snpEff to get intronic SNPs to inferr population structure and to annotate the VCF file. 
+
+```
+# Get Intronic SNPs
+
+wget http://ftp.flybase.net/genomes/Drosophila_melanogaster/current/gff/dmel-all-r6.57.gff.gz
+
+``` 
+Move the GFF file.
+
+```
+# Create VCF of intronic SNPs only
+vcf_file="${data}/dmel-all-r6.57.gff.gz"
+gff_file="${wd}/data/dmel-all-r6.57.gff.gz"
+neutralSNPs="${wd}/results/${arm}/Subsampled_NeutralSNPS_80.tsv"
+
+python3 ${scriptdir}/IntronicSNPS.py \
+ --gff $gff_file \
+ --vcf $vcf_file \
+ --target-length 80 \
+ --output $neutralSNPs
+
+vcftools --gzvcf $vcf_file \
+   --positions $neutralSNPs \
+   --recode --stdout | gzip > ${wd}/results/Subsampled_neutral.vcf.gz
+
+```
+
+
+Annotating SNPs with [snpEFF](http://pcingola.github.io/SnpEff/)
+
+```
+snpEff="/opt/bioinformatics/snpEff/snpEff.jar"
+
+module load Tools/snpEff        
+
+annotated="${wd}/results/Subsampled_ann.vcf.gz"
+java -jar $snpEff ann BDGP6.28.99 $Sub4 | gzip >> $annotated
+more $annotated | gunzip | awk ' !/^#/ {split($8,a,"|"); print $1 " " $2 " " a[4]}' > ${wd}/results/annotations.txt
+
+```
+
 --- 
 
 ## Project Workflow
@@ -157,14 +201,13 @@ Here are some of the key features of this project:
 > | Sample | 10% | Env | 10% | 276 | 86 | 19 | 105 |
  
 
- 
 
-
-- **Intersecting Data** – Includes unit and integration tests for reliability.
-
-
-- **Redundancy Analysis** – Works across different environments and operating systems.
-
+- **Redundancy Analysis** – This is an R script applicable across various platforms and operating systems.
+   - **Intersecting Data**
+   - **Additional Data** -
+   - **Variable selection**
+   - **Variance partitioning** - 
+   - **Permutations** -
 ---
 
 ## Results
