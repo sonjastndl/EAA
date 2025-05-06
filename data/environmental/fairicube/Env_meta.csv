@@ -1,0 +1,112 @@
+Layer Name,Null Value,Layer Source,Short Name,Type,Categories,Unit,Min,1st Qu.:,Median,Mean,3rd Qu.:,Max,NAs,Range
+global_pesticide_grids_apr_h_Other_2_4_d,-2;-1 5;-1,Rasdaman,PA24d,Numeric,,kg/ha,1.660,9.699,14.370,16.442,22.833,50.706,2,96
+global_pesticide_grids_apr_h_Other_Glyphosate,-2;-1 5;-1,Rasdaman,POGly,Numeric,,kg/ha,665,4.050,5.257,6.237,8.612,1.6621,2,96
+global_pesticide_grids_apr_h_Other_Metribuzin,-2;-1 5;-1,Rasdaman,POMet,Numeric,,kg/ha,0,0,0,0,0,0,2,29
+global_pesticide_grids_apr_h_PasHay_2_4_d,-2;-1 5;-1,Rasdaman,PasHay24d,Numeric,,kg/ha,135,1.172,1.705,2.118,2.915,5.693,4,95
+global_pesticide_grids_apr_h_PasHay_Clopyralid,-2;-1 5;-1,Rasdaman,PasHayClo,Numeric,,kg/ha,13,156,224,291,406,1.128,4,95
+global_pesticide_grids_apr_h_PasHay_Fluroxypyr,-2;-1 5;-1,Rasdaman,PasHayFlu,Numeric,,kg/ha,19,193,316,379,523,909,4,95
+global_pesticide_grids_apr_h_PasHay_Glyphosate,-2;-1 5;-1,Rasdaman,PasHayGly,Numeric,,kg/ha,1.753,12.385,18.843,22.227,22.833,Max.   :0.50706,4,95
+global_pesticide_grids_apr_h_PasHay_Mcpa,-2;-1 5;-1,Rasdaman,PasHayMcpa,Numeric,,kg/ha,87,496,716,811,1.025,2.394,4,95
+global_pesticide_grids_apr_h_PasHay_Metribuzin,-2;-1 5;-1,Rasdaman,PasHayMet,Numeric,,kg/ha,9,136,222,334,502,1.876,4,95
+global_pesticide_grids_apr_l_Other_2_4_d,-2;-1 5;-1,Rasdaman,PO24d_l,Numeric,,kg/ha,1.057,8.416,13.239,15.372,21.373,48.221,2,96
+global_pesticide_grids_apr_l_Other_Glyphosate,-2;-1 5;-1,Rasdaman,POGly_l,Numeric,,kg/ha,5.014,36.155,45.787,56.255,79.228,153.912,2,96
+global_pesticide_grids_apr_l_Other_Metribuzin,-2;-1 5;-1,Rasdaman,POMet_l,Numeric,,kg/ha,0,0,0,0,0,0,2,29
+global_pesticide_grids_apr_l_PasHay_2_4_d,-2;-1 5;-1,Rasdaman,PasHay24d_l,Numeric,,kg/ha,774,6.456,10.465,13.940,19.107,40.715,4,95
+global_pesticide_grids_apr_l_PasHay_Clopyralid,-2;-1 5;-1,Rasdaman,PasHayClo_l,Numeric,,kg/ha,8,107,148,204,289,892,4,95
+global_pesticide_grids_apr_l_PasHay_Fluroxypyr,-2;-1 5;-1,Rasdaman,PasHayFlu_l,Numeric,,kg/ha,11,129,193,262,363,682,4,95
+global_pesticide_grids_apr_l_PasHay_Glyphosate,-2;-1 5;-1,Rasdaman,PasHayGly_l,Numeric,,kg/ha,974,6.998,11.665,13.579,18.151,33.653,4,95
+global_pesticide_grids_apr_l_PasHay_Mcpa,-2;-1 5;-1,Rasdaman,PasHayMcpa_l,Numeric,,kg/ha,72,405,551,646,786,2.043,4,95
+global_pesticide_grids_apr_l_PasHay_Metribuzin,-2;-1 5;-1,Rasdaman,PasHayMet_l,Numeric,,kg/ha,0,85,144,243,387,1.627,4,95
+ds.earthserver.xyz--7000--AvgTemperatureColorScaled_Red,NA,Rasdaman,AT_red,Numeric,,wwavelength,152.0,230.0,235.0,232.9,240.0,250.0,0,32
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_active_daily_dnflag_Day / Night Flag,0,Rasdaman,SMaDNF,Categoric,4,"0, 1, 2, 3 with meanings: NaN day night day_night_combination",  0.00, 13.50, 55.00, 69.16,108.00,230.00,0,46
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_active_daily_flag_Flag,127,Rasdaman,SMaF,Categoric,5,"0, 1, 4, 5, 8, 127 with meanings: no_data_inconsistency_detected snow_coverage_or_temperature_below_zero others_no_convergence_in_the_model_thus_no_valid_sm_estimates combination_of_flag_values_1_and_4 soil_moisture_value_exceeds_physical_boundary NaN",  0.00,  0.00,  0.00,12.09,  3.00,151.00,0,15
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_active_daily_sm_Percent of Saturation Soil Moisture,-9999,Rasdaman,SMaPercSat,Numeric,,Percent of Saturation Soil Moisture with values between 0 and 100,0,1.000,1.000,1.551,3.000,3.000,0,4
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_active_daily_sm_uncertainty_Percent of Saturation Soil Moisture Uncertainty,-9999,Rasdaman,SMaPercSatU,Numeric,,Percent of Saturation Soil Moisture with values between 0 and 100,  0.0,256.0,512.0,505.4,768.0,768.0,0,4
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_combined_daily_dnflag_Day / Night Flag,0,Rasdaman,SMcDNF,Categoric,4,"0, 1, 2, 3 with meanings: NaN day night day_night_combination",-9.999.000,-9.999.000,9.541,-2.854.180,14.345,20.070,0,58
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_combined_daily_flag_Flag,127,Rasdaman,SMcF,Categoric,5,"0, 1, 4, 5, 8, 127 with meanings: no_data_inconsistency_detected snow_coverage_or_temperature_below_zero others_no_convergence_in_the_model_thus_no_valid_sm_estimates combination_of_flag_values_1_and_4 soil_moisture_value_exceeds_physical_boundary NaN",-3440586,16307,17043,-560251,17797,18261,0,164
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_combined_daily_freqbandID_Frequency Band Identification,0,Rasdaman,SMcFBI,Categoric,,NA,1.000,2.000,2.000,2.286,3.000,3.000,17,3
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_combined_daily_sensor_sensor,0,Rasdaman,SMcSens,Categoric,4,"0, 256, 512, 768 with meanings: NaN ASCATA ASCATB ASCATA+ASCATB", 2.00, 2.00,18.00,15.11,18.00,66.00,17,10
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_combined_daily_sm_Volumetric Soil Moisture,-9999,Rasdaman,SMcVSM,Numeric,,m^3.m^-3,0.00,1.00,2.00,1.94,3.00,3.00,0,4
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_combined_daily_sm_uncertainty_Volumetric Soil Moisture Uncertainty,-9999,Rasdaman,SMcVSMU,Numeric,,m^3.m^-3,  0.0,256.0,544.0,487.5,800.0,800.0,0,8
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_passive_daily_dnflag_Day / Night Flag,0,Rasdaman,SMpDNF,Categoric,4,"0, 1, 2, 3 with meanings: NaN day night day_night_combination",-9.999.000,-9.999.000,11,-3.375.718,20,56,0,78
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_passive_daily_flag_Flag,127,Rasdaman,SMpF,Categoric,5,"0, 1, 4, 5, 8, 127 with meanings: no_data_inconsistency_detected snow_coverage_or_temperature_below_zero others_no_convergence_in_the_model_thus_no_valid_sm_estimates combination_of_flag_values_1_and_4 soil_moisture_value_exceeds_physical_boundary NaN",-3440586,-9999,17006,-796705,17770,18261,0,157
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_passive_daily_sm_Volumetric Soil Moisture,-9999,Rasdaman,SMpVSM,Numeric,,m^3.m^-3,0,0,0,9.402,0,200.000,0,3
+ds.earthserver.xyz--7000--C3S_satellite_soil_moisture_passive_daily_sm_uncertainty_Volumetric Soil Moisture Uncertainty,-9999,Rasdaman,SMpVSMU,Numeric,,m^3.m^-3,0,0,0,9.436,32.000,32.000,0,2
+ds.earthserver.xyz--7000--S5p_L2_AER_AI_aerosol_index_335_367_global_Aerosol Index (335 367 nm),"9,97E+41",Rasdaman,AI335,Numeric,,NA,-15.520,-8.431,-6.098,-3.969,2.781,9.900,0,82
+ds.earthserver.xyz--7000--S5p_L2_AER_AI_aerosol_index_335_367_precision_global_Aerosol Index Precision (335 367 nm),"9,97E+41",Rasdaman,AI335P,Numeric,,NA,2.678,3.508,4.124,3.938,4.201,5.372,0,82
+ds.earthserver.xyz--7000--S5p_L2_AER_AI_aerosol_index_340_380_global_Aerosol Index (340 380 nm),"9,97E+41",Rasdaman,AI340,Numeric,,NA,-42.885,-18.608,-14.545,-13.358,-8.813,1.1397,0,138
+ds.earthserver.xyz--7000--S5p_L2_AER_AI_aerosol_index_340_380_precision_global_Aerosol Index Precision (340 380 nm),"9,97E+41",Rasdaman,AI340P,Numeric,,NA,1.139,2.188,2.439,2.441,2.729,3.319,0,138
+ds.earthserver.xyz--7000--S5p_L2_AER_AI_aerosol_index_354_388_global_Aerosol Index (354 388 nm),"9,97E+41",Rasdaman,AI354,Numeric,,NA,-33.732,-14.116,-10.517,-9.637,-5.268,9.545,0,138
+ds.earthserver.xyz--7000--S5p_L2_AER_AI_aerosol_index_354_388_precision_global_Aerosol Index Precision (354 388 nm),"9,97E+41",Rasdaman,AI354P,Numeric,,NA,1.115,2.111,2.474,2.467,2.708,3.533,0,138
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_base_height_global_Cloud Base Height,"9,97E+41",Rasdaman,CLgCBH,Numeric,,NA,   44.07,  498.36, 1431.47, 1850.68, 2256.33,10663.83,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_base_height_precision_global_Cloud Base Height Precision,"9,97E+41",Rasdaman,CLgCBHP,Numeric,,NA,5,34.045,149.915,307.628,457.428,3.269.642,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_base_pressure_global_Cloud Base Pressure,"9,97E+41",Rasdaman,CLgCBP,Numeric,,NA,24405,76308,84808,82398,96294,101555,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_base_pressure_precision_global_Cloud Base Pressure Precision,"9,97E+41",Rasdaman,CLgCBPP,Numeric,,NA,1,2.263,1.7153,5.8846,7.3492,1.343.343,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_fraction_global_Cloud Fraction,"9,97E+41",Rasdaman,CLgCF,Numeric,,NA,0,2.947,5.937,5.825,9.316,1.2000,0,108
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_fraction_precision_global_Cloud Fraction Precision,"9,97E+41",Rasdaman,CLgCFP,Numeric,,NA,0,0,0,16,1,345,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_optical_thickness_global_Cloud Optical Thickness,"9,97E+41",Rasdaman,CLgCOT,Numeric,,NA,1.606,5.017,10.453,22.308,19.347,250.000,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_optical_thickness_precision_global_Cloud Optical Thickness Precision,"9,97E+41",Rasdaman,CLgCOTP,Numeric,,NA,1.000,1.000,1.002,1.055,1.016,1.928,9,116
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_top_height_global_Cloud Top Height,"9,97E+41",Rasdaman,CLgCTH,Numeric,,NA,   59.49,  994.44, 2418.24, 2586.41, 3256.33,11663.83,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_top_height_precision_global_Cloud Top Height Precision,"9,97E+41",Rasdaman,CLgCTHP,Numeric,,NA,5,34.045,149.915,307.628,457.428,3.269.642,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_top_pressure_global_Cloud Top Pressure,"9,97E+41",Rasdaman,CLgCTP,Numeric,,NA,20821,66892,74541,75580,91690,101555,9,129
+ds.earthserver.xyz--7000--S5p_L2_CLOUD_cloud_top_pressure_precision_global_Cloud Top Pressure Precision,"9,97E+41",Rasdaman,CLgCTPP,Numeric,,NA,1,2.604,2.3152,8.1650,10.1899,1.469.315,9,129
+ds.earthserver.xyz--7000--S5p_L2_HCHO_formaldehyde_tropospheric_vertical_column_global_Formaldehyde Vertical Column,"9,97E+41",Rasdaman,HCOHgFVC,Numeric,,NA,-371,-13,43,70,149,972,13,135
+ds.earthserver.xyz--7000--S5p_L2_HCHO_formaldehyde_tropospheric_vertical_column_precision_global_Formaldehyde Vertical Column Precision,"9,97E+41",Rasdaman,HCOHgFVCP,Numeric,,NA,0,31,73,117,162,645,13,135
+ds.earthserver.xyz--7000--S5p_L2_NO2_air_mass_factor_total_global_NO2 Air Mass Factor (Total),"9,97E+41",Rasdaman,NO2gAMF,Numeric,,NA,6.693,1.8424,2.0503,2.1574,2.4799,3.5905,5,137
+ds.earthserver.xyz--7000--S5p_L2_NO2_air_mass_factor_troposphere_global_NO2 Air Mass Factor (Troposphere),"9,97E+41",Rasdaman,NO2gAMFtrop,Numeric,,NA,5.135,72.690,109.591,109.903,132.352,275.184,5,137
+ds.earthserver.xyz--7000--S5p_L2_NO2_nitrogendioxide_tropospheric_column_global_NO2 Tropospheric Column,"9,97E+41",Rasdaman,NO2gAMFtc,Numeric,,NA,-5.7e-05, 1.4e-05, 3.0e-05, 4.0e-05, 4.9e-05, 8.1e-04,5,137
+ds.earthserver.xyz--7000--S5p_L2_NO2_nitrogendioxide_tropospheric_column_precision_global_NO2 Tropospheric Column Precision,"9,97E+41",Rasdaman,NO2gAMFtcp,Numeric,,NA,7.0e-06,1.3e-05,2.1e-05,3.0e-05,3.6e-05,3.5e-04,5,137
+ds.earthserver.xyz--7000--S5p_L2_NO2_nitrogendioxide_tropospheric_column_precision_kernel_global_NO2 Tropospheric Column Precision Kernel,"9,97E+41",Rasdaman,NO2gAMFtcpk,Numeric,,NA,6.0e-06,1.2e-05,2.0e-05,2.8e-05,3.3e-05,3.1e-04,5,137
+ds.earthserver.xyz--7000--S5p_L2_NO2_tm5_tropopause_layer_index_global_NO2 Tropopause Layer Index,"9,97E+41",Rasdaman,NO2gTLI,Uncertain,,NA,"-2,15E+12","1,40E+04","1,50E+04","-5,32E+10","1,60E+04","2,30E+04",32,10
+ds.earthserver.xyz--7000--S5p_L2_O3_ozone_total_vertical_column_global_Ozone Vertical Column,"9,97E+41",Rasdaman,O3gOVC,Numeric,,NA,1.141,1.269,1.362,1.376,1.499,1.608,0,138
+ds.earthserver.xyz--7000--S5p_L2_O3_ozone_total_vertical_column_precision_global_Ozone Vertical Column Precision,"9,97E+41",Rasdaman,O3gOVCP,Numeric,,NA,3.188,6.005,6.959,6.923,7.796,10.805,0,138
+ds.earthserver.xyz--7000--S5p_L2_SO2_sulfurdioxide_total_vertical_column_global_SO2 Vertical Column,"9,97E+41",Rasdaman,SO2gVC,Numeric,,NA,-30.558,-2.063,-12,-1.048,852,20.738,12,136
+ds.earthserver.xyz--7000--S5p_L2_SO2_sulfurdioxide_total_vertical_column_precision_global_SO2 Vertical Column Precision,"9,97E+41",Rasdaman,SO2gVCP,Numeric,,NA,90,480,851,2.472,3.131,15.710,12,136
+ds.earthserver.xyz--7000--TotalPrecipitation_Total precipitation,-32767,Rasdaman,TotalPrecipitation,Numeric,,NA,"0,00E+00","2,67E-02","4,68E-02","1,38E-01","1,63E-01","6,91E-01",0,65
+reanalysis era5 single levels_10m_u_component_of_wind_daily,NA,Copernicus,ERA5windU,Numeric,,m/s,-561.351,-117.506,5.482,18.138,141.555,595.645,3,229
+reanalysis era5 single levels_10m_v_component_of_wind_daily,NA,Copernicus,ERA5windV,Numeric,,m/s,-959.490,-134.452,9.640,3.155,142.928,536.336,3,229
+reanalysis era5 single levels_2m_dewpoint_temperature_daily,NA,Copernicus,ERA5_2mdt,Numeric,,K,271.2,281.2,284.5,284.2,287.3,293.3,3,227
+reanalysis era5 single levels_mean_sea_level_pressure_daily,NA,Copernicus,ERA5mslp,Numeric,,Pa,99582,101258,101650,101684,102068,104501,3,228
+reanalysis era5 single levels_2m_temperature_daily,NA,Copernicus,ERA5_2mt,Numeric,,K,275.1,284.7,287.6,287.7,290.8,301.2,3,228
+reanalysis era5 single levels_surface_pressure_daily,NA,Copernicus,ERA5sp,Numeric,,Pa,86438,97351,99291,98360,100429,103384,3,228
+reanalysis era5 single levels_total_precipitation_daily,NA,Copernicus,ERA5totp,Numeric,,m,0,0,0,852,23,38.437,3,75
+reanalysis era5 single levels_surface_thermal_radiation_downwards_daily,NA,Copernicus,ERA5strd,Numeric,,J m-2,897713,1131520,1202900,1199996,1277940,1422485,3,229
+reanalysis era5 single levels_maximum_2m_temperature_since_previous_post_processing_daily,NA,Copernicus,ERA5max2mt,Numeric,,K,275.6,285.8,288.9,288.7,291.7,301.7,3,229
+reanalysis era5 single levels_minimum_2m_temperature_since_previous_post_processing_daily,NA,Copernicus,ERA5min2mt,Numeric,,K,275.5,285.4,288.3,288.3,291.3,301.1,3,228
+reanalysis era5 single levels_precipitation_type_daily,NA,Copernicus,ERA5prect,Categoric,7,"0: No precipitation, 1: Rain, 3: Freezing rain (i.e. supercooled raindrops which freeze on contact with the ground and other surfaces), 5: Snow, 6: Wet snow (i.e. snow particles which are starting to melt); 7: Mixture of rain and snow, 8: Ice pellets.",0,0,0,2.857,1.2000,1.2000,3,2
+reanalysis era5 single levels_soil_temperature_level_1_daily,NA,Copernicus,ERA5st1,Numeric,,K,275.1,285.8,288.7,288.6,291.8,302.2,2,230
+reanalysis era5 single levels_soil_temperature_level_2_daily,NA,Copernicus,ERA5st2,Numeric,,K,276.5,288.1,291.7,291.4,294.1,305.1,2,229
+reanalysis era5 single levels_soil_temperature_level_3_daily,NA,Copernicus,ERA5st3,Numeric,,K,278.6,288.0,290.8,290.7,293.1,301.4,1,231
+reanalysis era5 single levels_soil_temperature_level_4_daily,NA,Copernicus,ERA5st4,Numeric,,K,280.3,286.4,289.1,289.2,291.3,297.4,1,231
+reanalysis era5 single levels_volumetric_soil_water_layer_1_daily,NA,Copernicus,ERA5vswl1,Numeric,,m3 m-3,6.979,19.155,25.671,26.327,33.976,45.743,1,231
+reanalysis era5 single levels_volumetric_soil_water_layer_2_daily,NA,Copernicus,ERA5vswl2,Numeric,,m3 m-3,5.323,19.277,25.975,25.793,32.710,45.252,1,231
+reanalysis era5 single levels_soil_type_daily,NA,Copernicus,ERA5stype,Categoric,7,"1: Coarse, 2: Medium, 3: Medium fine, 4: Fine, 5: Very fine, 6: Organic, 7: Tropical organic",0,2.000,2.000,2.343,3.000,6.000,1,6
+reanalysis era5 single levels_high_vegetation_cover_daily,NA,Copernicus,ERA5hvc,Numeric,,Dimensionless; 0&1,0,3.127,4.326,4.952,7.474,9.819,1,74
+reanalysis era5 single levels_leaf_area_index_high_vegetation_daily,NA,Copernicus,ERA5hLAI,Numeric,,m2 m-2,727,1.873,2.261,2.329,2.757,4.237,1,222
+reanalysis era5 single levels_leaf_area_index_low_vegetation_daily,NA,Copernicus,ERA5lLAI,Numeric,,m2 m-2,595,2.170,2.501,2.422,2.775,3.167,1,222
+reanalysis era5 single levels_low_vegetation_cover_daily,NA,Copernicus,ERA5lvg,Uncertain,,Dimensionless; 0&1,0,1.942,4.138,4.474,6.493,9.860,1,74
+reanalysis era5 single levels_skin_temperature_daily,NA,Copernicus,ERA5skint,Numeric,,K,274.9,284.4,287.1,287.2,290.3,300.0,1,231
+reanalysis era5 single levels monthly means_10m_u_component_of_wind_monthly,NA,Copernicus,mERA5windU,Numeric,,m/s,-20.779,-2.577,2.685,3.425,9.113,3.6660,0,230
+reanalysis era5 single levels monthly means_10m_v_component_of_wind_monthly,NA,Copernicus,mERA5windV,Numeric,,m/s,-232.457,-53.157,-4.050,-2.717,50.237,269.055,0,230
+reanalysis era5 single levels monthly means_2m_dewpoint_temperature_monthly,NA,Copernicus,mERA5_2mdt,Numeric,,K,273.5,281.9,284.3,284.0,286.3,292.3,0,229
+reanalysis era5 single levels monthly means_mean_sea_level_pressure_monthly,NA,Copernicus,mERA5mslp,Numeric,,Pa,100701,101481,101656,101630,101786,102895,0,228
+reanalysis era5 single levels monthly means_2m_temperature_monthly,NA,Copernicus,mERA5_2mt,Numeric,,K,276.2,287.7,290.3,290.2,293.5,300.3,0,229
+reanalysis era5 single levels monthly means_surface_pressure_monthly,NA,Copernicus,mERA5sp,Numeric,,Pa,86823,97585,99300,98323,100253,101615,0,230
+reanalysis era5 single levels monthly means_total_precipitation_monthly,NA,Copernicus,mERA5totp,Numeric,,m,88,1.135,1.866,2.056,2.702,9.870,0,230
+reanalysis era5 single levels monthly means_surface_solar_radiation_downwards_monthly,NA,Copernicus,mERA5ssrd,Numeric,,J m-2,3100160,11906222,15300462,15372299,19652030,28620064,0,230
+reanalysis era5 single levels monthly means_surface_thermal_radiation_downwards_monthly,NA,Copernicus,mERA5strd,Numeric,,J m-2,23717750,28299572,29362554,29329620,30346232,33051060,0,230
+reanalysis era5 single levels monthly means_mean_snowfall_rate_monthly,NA,Copernicus,mERA5snow_rate,Numeric,,kg m-2 s-1,"0,00E+00","0,00E+00","0,00E+00","1,07E-04","0,00E+00","8,19E-03",0,18
+reanalysis era5 single levels monthly means_snowfall_monthly,NA,Copernicus,mERA5snow,Numeric,,m of water equivalent,"0,00E+00","0,00E+00","0,00E+00","9,27E-03","0,00E+00","7,08E-01",0,18
+reanalysis era5 single levels monthly means_soil_temperature_level_1_monthly,NA,Copernicus,mERA5stl1,Numeric,,K,276.0,287.8,290.7,290.4,293.7,302.8,0,230
+reanalysis era5 single levels monthly means_soil_temperature_level_2_monthly,NA,Copernicus,mERA5stl2,Numeric,,K,277.3,288.0,290.6,290.6,293.6,302.0,0,230
+reanalysis era5 single levels monthly means_soil_temperature_level_3_monthly,NA,Copernicus,mERA5stl3,Numeric,,K,279.9,287.8,290.2,290.4,293.2,300.3,0,230
+reanalysis era5 single levels monthly means_soil_temperature_level_4_monthly,NA,Copernicus,mERA5stl4,Numeric,,K,278.7,286.2,289.3,289.0,291.2,297.0,0,230
+reanalysis era5 single levels monthly means_volumetric_soil_water_layer_1_monthly,NA,Copernicus,mERA5vswl1,Numeric,,m3 m-3,7.852,21.163,27.685,27.476,33.898,44.071,0,230
+reanalysis era5 single levels monthly means_volumetric_soil_water_layer_2_monthly,NA,Copernicus,mERA5vswl2,Numeric,,m3 m-3,2.705,20.127,26.525,26.137,33.008,43.753,0,230
+reanalysis era5 single levels monthly means_soil_type_monthly,NA,Copernicus,mERA5stype,Categoric,7,"1: Coarse, 2: Medium, 3: Medium fine, 4: Fine, 5: Very fine, 6: Organic, 7: Tropical organic",0,2.000,2.000,2.342,3.000,6.000,0,6
+reanalysis era5 single levels monthly means_high_vegetation_cover_monthly,NA,Copernicus,mERA5hvc,Uncertain,,Dimensionless; 0&1,0,3.127,4.339,4.968,7.556,9.819,0,74
+reanalysis era5 single levels monthly means_leaf_area_index_high_vegetation_monthly,NA,Copernicus,mERA5hLAI,Numeric,,m2 m-2,7.319,1.9254,2.2272,2.3221,2.7893,4.2180,0,175
+reanalysis era5 single levels monthly means_leaf_area_index_low_vegetation_monthly,NA,Copernicus,mERA5lLAI,Numeric,,m2 m-2,5.953,2.1211,2.5252,2.4207,2.7686,3.1601,0,175
+reanalysis era5 single levels monthly means_low_vegetation_cover_monthly,NA,Copernicus,mERA5lvc,Numeric,,Dimensionless; 0&1,0,1.942,4.138,4.460,6.493,9.860,0,74
+reanalysis era5 single levels monthly means_skin_temperature_monthly,NA,Copernicus,mERA5skint,Numeric,,K,276.5,287.9,290.7,290.6,294.2,302.7,0,229
+reanalysis era5 single levels monthly means_snow_depth_monthly,NA,Copernicus,mERA5snowD,Numeric,,m of water equivalent,0,0,0,185,0,23.182,0,19
