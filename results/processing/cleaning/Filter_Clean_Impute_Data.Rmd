@@ -335,6 +335,26 @@ create_plot <- function(column, col_name) {
   }
 }
 
+num_cols <- ncol(EnvCore)
+
+DATA <- EnvCore
+
+num_cols <- ncol(DATA)
+for (start in seq(1, num_cols, by = 12)) {
+  end <- min(start + 11, num_cols)  # Ensure the end does not exceed num_cols
+  print(paste(start,end, sep=""))
+  plots <- lapply(names(DATA[,start:end]), function(col_name) {
+    create_plot(DATA[,start:end][[col_name]], col_name) })
+  # Save plots to a PDF file
+  #pdf(file = sprintf("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/S#ats/ValidationAfterImputation/Validatio_after_Correction_and_Imputation_%d.pdf", start), width = 14, height = 11)
+  # Save plots to a PNG file
+  a <- grid.arrange(grobs = plots, ncol = 3, nrow = 4)
+  ggsave(file = paste("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/Stats/ValidationAfterCleanUp/Validation_before_Imputation_",start,".png"),a)
+  dev.off()
+}
+
+
+
 
 EnvDataUse <- EnvCore_imputed
 
@@ -344,18 +364,19 @@ num_cols <- ncol(EnvDataUse)
 
 DATA <- EnvDataUse
 
-
 num_cols <- ncol(DATA)
-#for (start in seq(1, num_cols, by = 12)) {
-#  end <- min(start + 11, num_cols)  # Ensure the end does not exceed num_cols
-#  print(paste(start,end, sep=""))
-#  plots <- lapply(names(DATA[,start:end]), function(col_name) {
-#    create_plot(DATA[,start:end][[col_name]], col_name) })
-#  # Save plots to a PDF file
-#  #pdf(file = sprintf("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/St#ats/ValidationAfterImputation/Validatio_after_Correction_and_Imputation_%d.pdf", start), width = 14, height = 11)
-#  grid.arrange(grobs = plots, ncol = 3, nrow = 4)
-#  dev.off()
-#}
+for (start in seq(1, num_cols, by = 12)) {
+  end <- min(start + 11, num_cols)  # Ensure the end does not exceed num_cols
+  print(paste(start,end, sep=""))
+  plots <- lapply(names(DATA[,start:end]), function(col_name) {
+    create_plot(DATA[,start:end][[col_name]], col_name) })
+  # Save plots to a PDF file
+  #pdf(file = sprintf("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/S#ats/ValidationAfterImputation/Validatio_after_Correction_and_Imputation_%d.pdf", start), width = 14, height = 11)
+  # Save plots to a PNG file
+  a <- grid.arrange(grobs = plots, ncol = 3, nrow = 4)
+  ggsave(file = paste("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/Stats/ValidationAfterImputation/Validatio_after_Correction_and_Imputation_",start,".png", sep=""), a)
+  dev.off()
+}
 
 
 ```

@@ -202,6 +202,9 @@ Having correct and clean data is essential for reliable results.
 >>  -  Removing highly intercorrelated variables 
 >>  -  Removing variables with missing data above threshold 
 >>  -  Impute missing data (We imputed categorial data by using the most common value, numerical data was imputed with inverse distance weighting in our script (see below).)
+>>  -  Analysis of imputed data 
+>>     ![Data Properties](results/processing/cleaning/ValidationAfterImputation/Validatio_after_Correction_and_Imputation_1.png)
+>>  
 >
 >
 >
