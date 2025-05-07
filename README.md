@@ -175,12 +175,15 @@ more $annotated | gunzip | awk ' !/^#/ {split($8,a,"|"); print $1 " " $2 " " a[4
 
 1. [Acquiring Data](#acquring-data)
 2. [Cleaning Data](#cleaning-data)
+2. [Redundancy Analysis](#redundancy-analysis)
 
 <!--ts-->
 
-- **Acquiring Data** – See in the chapter [Data](#data) above.
+### Acquiring Data 
+See in the chapter [Data](#data) above.
   
-- **Cleaning Data** – Having clean data is essential for reliable results.
+### Cleaning Data
+Having clean data is essential for reliable results.
   
 > **Clean Up of Genetic Data included:** 
 >>  -  Removing Low Quality Sites
