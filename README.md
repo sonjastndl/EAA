@@ -194,7 +194,7 @@ Here are some of the key features of this project:
 >
 >
 >
-> When cleaning the data, we tested two approaches with different thresholds. You can see the entire CleanUp Strategy in our [RMD file](results/processing/cleaning/Filter_Clean_Impute_Data.Rmd) and the results in the [CleanUp Folder](results/processing/cleaning).
+> When cleaning the data, we tested two approaches with different thresholds. You can see the entire CleanUp Strategy in our [Clean Up RMD file](results/processing/cleaning/Filter_Clean_Impute_Data.Rmd), a preview in the [Clean Up HTML](results/processing/cleaning/Filter_Clean_Impute_Data.html) and the corresponding esults in the [CleanUp Folder](results/processing/cleaning).
 
 
 > | Filter 1  | Filter 1 Threshold  | Filter 2  | Filter 2 Threshold | Populations | Env | WorldClim Env | Env Total | Total Imputed|
@@ -203,10 +203,12 @@ Here are some of the key features of this project:
 > |  Env| 10% | Sample | 10% | 28 | 126| 19| 145 |
 > | **Env** | **15%** | **Sample** | **15%** | **179** | **141**| **19**| **160**| **0.00454633**| 
 > | Sample | 10% | Env | 10% | 276 | 86 | 19 | 105 |
- 
-
-![Strategy A](results/processing/cleaning/Pops_StrategyA.png)
-![Strategy B](results/processing/cleaning/Pops_StrategyB.png)
+> |
+> |
+> | ![Strategy A](results/processing/cleaning/Pops_StrategyA.png)
+> | ![Strategy B](results/processing/cleaning/Pops_StrategyB.png)
+> |
+> | For the following analysis, filtering strategy A was selected and a dataset comprised of 141 layers for 179 Drosophila sampels was used. 
 
 
 - **Redundancy Analysis** – This is an R script applicable across various platforms and operating systems.
@@ -217,6 +219,9 @@ Here are some of the key features of this project:
    - **Permutations** 
    - **Threshold**
    - **GOterm analysis** 
+
+
+
 ---
 
 ## Results
