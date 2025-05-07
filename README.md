@@ -186,13 +186,17 @@ Here are some of the key features of this project:
 >>      However in the course of the project, a method for imputing population genomic data at allele frequency level was developed: [see here](https://github.com/FAIRiCUBE/uc3-drosophola-genetics/tree/main/projects/gap_filling).) 
 >
 > **Clean Up of Environmental Data involves:**
+>>  -  Analysis of Completeness of Data 
 >>  -  Removing non-unique variables 
 >>  -  Removing highly intercorrelated variables 
 >>  -  Removing variables with missing data above threshold 
 >>  -  Impute missing data (We imputed categorial data by using the most common value, numerical data was imputed with inverse distance weighting in our [Rscript]().)
 >
 >
-> When cleaning the data, we tested two approaches with different thresholds.
+>
+> When cleaning the data, we tested two approaches with different thresholds. You can see the entire CleanUp Strategy in our [RMD file](results/processing/cleaning/Filter_Clean_Impute_Data.Rmd) and the results in the [CleanUp Folder](results/processing/cleaning).
+
+
 > | Filter 1  | Filter 1 Threshold  | Filter 2  | Filter 2 Threshold | Populations | Env | WorldClim Env | Env Total | Total Imputed|
 > | --------------- | --------------- | --------------- |--------------- | --------------- | --------------- |--------------- | --------------- |  --------------- | 
 > | **Sample** | **15 %** | **Env** | **15%** | **293** | **135** | **19**| **154** | **0.01794903**| 
@@ -200,6 +204,9 @@ Here are some of the key features of this project:
 > | **Env** | **15%** | **Sample** | **15%** | **179** | **141**| **19**| **160**| **0.00454633**| 
 > | Sample | 10% | Env | 10% | 276 | 86 | 19 | 105 |
  
+
+![Strategy A](results/processing/cleaning/Pops_StrategyA.png)
+![Strategy B](results/processing/cleaning/Pops_StrategyB.png)
 
 
 - **Redundancy Analysis** – This is an R script applicable across various platforms and operating systems.
