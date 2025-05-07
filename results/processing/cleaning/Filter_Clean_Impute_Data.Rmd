@@ -1,0 +1,588 @@
+---
+title: "RDA Research Plan - Data Preparation"
+author: "Steindl S."
+date: "13 11 2024"
+output: html_document
+---
+
+```{r setup, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# ENV DATA
+### Explore Env Data from ERA5
+
+``` {r LoadEnvData, echo=FALSE, warning=FALSE}
+library(ggplot2)
+library(gridExtra)
+library(knitr)
+library(DT)
+library(FactoMineR)
+library(factoextra)
+### load data and remove sample, lat and long from exploration
+ERA5_path <- "/home/ssteindl/mounts/BioMem_2/ssteindl/UC3/ClimateData/ERA5/ERA5_Europe_Pass.csv"
+ERA5 <- read.csv(ERA5_path)
+WP_path <-"/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/QueryCube/use_case/wormpicked_data/rasdaman_data_test.csv"
+WP_data <- read.csv(WP_path, header=T)
+WP_Null_path <- "/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/QueryCube/data/NullValues_05_12_24.csv"
+WP_null_values <- read.csv(WP_Null_path, header=FALSE)
+ERA5_monthly_path <- "/home/ssteindl/mounts/BioMem_2/ssteindl/UC3/ClimateData/ERA5/ERA5_Europe_Monthly_Pass.csv"
+ERA5_monthly <- read.csv(ERA5_monthly_path)
+
+###choose which data (ERA5 or rasdaman) or combine
+Env_Full_o <- merge(WP_data, ERA5, by=c("sample", "latitude", "longitude"))
+Env_Full <- merge(Env_Full_o, ERA5_monthly, by=c("sample", "latitude", "longitude", "date"))
+
+
+metadata <- read.csv("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/Stats/metadata_corrected.csv", header=TRUE)
+samples <- Env_Full$sample
+lat <- Env_Full$latitude
+lon <- Env_Full$longitude
+datevals <- Env_Full$date
+
+#metadata$Layer.Name <- gsub("--","..", metadata$Layer.Name)
+metadata$Layer.Name <- gsub("\\(",".", metadata$Layer.Name)
+metadata$Layer.Name <- gsub(" ",".", metadata$Layer.Name)
+metadata$Layer.Name <- gsub("-",".", metadata$Layer.Name)
+metadata$Layer.Name <- gsub("\\/",".", metadata$Layer.Name)
+metadata$Layer.Name <- gsub(")",".", metadata$Layer.Name)
+#metadata$Layer.Name <- gsub("Index.","Index..", metadata$Layer.Name)
+
+
+
+
+cols_to_remove <- c("sample")  # Your list of columns to remove
+Env <- Env_Full[ , !(names(Env_Full) %in% cols_to_remove)]
+## drop pure NA columns
+#Env <- Env[, colSums(Env == "na") != nrow(Env)]
+Env <- as.data.frame(lapply(Env, as.numeric))
+
+
+##remove monomorphic columns 
+non_monomorphic <- sapply(Env, function(col) length(unique(na.exclude(col))) > 1)
+EnvData <- Env[, non_monomorphic]
+
+#correlation
+#corrplot::corrplot(cor(EnvData))
+
+```
+
+
+# Removing monormpih columns from dataset and analyse the NULL-value/NA propriton in the data.
+
+``` {r ProcessEnvData, echo=FALSE, warning=FALSE}
+
+#null_values_old <- read.csv("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/WormPickerOOP/NUllValuesDetail_expand.csv",header=FALSE)
+colnames(WP_null_values) <- c("Layer", "Value")
+#replace_list <- split(WP_null_values$Value,WP_null_values$Layer)
+#replace_list <- split(strsplit(WP_null_values$Value, ";")[[1]], WP_null_values$Layer)
+split_values <- sapply(WP_null_values$Value, function(x) strsplit(x, ";")[[1]])
+
+# Use split() to create the replace_list grouped by 'Layer'
+replace_list <- split(split_values, WP_null_values$Layer)
+names(replace_list) <- gsub("--", "..", names(replace_list))
+names(replace_list) <- gsub(" ", ".", names(replace_list))
+names(replace_list) <- gsub("-", ".", names(replace_list))
+names(replace_list) <- gsub("\\(", ".", names(replace_list))
+names(replace_list) <- gsub(")", ".", names(replace_list))
+
+EnvNULL <- as.data.frame(cbind(lat, lon, EnvData))
+rownames(EnvNULL) <- samples
+#
+#
+###Replace Null Values with "NULL"
+
+##Replace Null Values with "NULL"
+#old code not working anymore
+#for (col in names(replace_list)) {
+#  if (col %in% colnames(EnvData)) {
+#    print(col)
+#    EnvNULL[[col]] <- ifelse(EnvData[[col]] %in% replace_list[[col]][[1]], "NULL", #EnvData[[col]])
+#  }
+#}
+
+## Iterating through replace_list
+for (col in names(replace_list)) {
+  if (col %in% colnames(EnvData)) {
+    print(col)
+    # Split the null-value strings by ";" and convert to numeric
+    null_values <- unlist(strsplit(replace_list[[col]][[1]], ";"))
+    null_values <- as.numeric(null_values)  # Ensure numeric comparison if needed
+    
+    # Replace values in EnvData with "NULL" if they match any in null_values
+    EnvNULL[[col]] <- ifelse(EnvData[[col]] %in% null_values, "NULL", EnvData[[col]])
+  }
+}
+#
+#save this for removing residual removing of not interpolation
+#for (col in names(replace_list)) {
+#  if (col %in% colnames(Env)) {
+#    #print(col)
+#    EnvNULL[[col]] <- ifelse(Env[[col]] %in% replace_list[[col]][[1]], "NULL", Env[[col]])
+#  }
+#}
+
+##EnvNULL <- EnvNULL[!grepl("^UA|RU|BY|DK", rownames(EnvNULL)), ]
+EnvNULL <- as.data.frame(cbind(datevals,EnvNULL))
+
+###remove rasdaman era5
+r_pattern="ds.earthserver.xyz..7000..ERA5"
+Rasda_cols <- grep(r_pattern, colnames(EnvNULL), value = TRUE)
+print(Rasda_cols)
+EnvNULL <- EnvNULL[, !colnames(EnvNULL) %in% Rasda_cols]
+colnames(EnvNULL) <- gsub("\\.y","",colnames(EnvNULL))
+
+## count/frequency of Null/NA’s for each Env
+
+NA_NULL_Proportions <- data.frame(
+  NA_count = sapply(EnvNULL, function(x) sum(is.na(x))),
+  NULL_count = sapply(EnvNULL, function(x) sum(x == "NULL")),
+  NA_proportion = sapply(EnvNULL,  function(x) sum(is.na(x)) / nrow(EnvNULL)),
+  NULL_proportion = sapply(EnvNULL, function(x) sum(x == "NULL") / nrow(EnvNULL))
+)
+
+
+#change to either NULL or NA depending if you know NULL values or not
+#Env85_cols <- rownames(NA_NULL_Proportions[NA_NULL_Proportions$NA_proportion < 0.15 & NA_NULL_Proportions$NULL_proportion < 0.15 ,])
+
+
+
+## Filter Strategy A (Fitler first Environemnt, then Sample with threshold
+
+## 1. Filter vor Env
+Env85_cols <- rownames(NA_NULL_Proportions[
+  (is.na(NA_NULL_Proportions$NA_proportion) | NA_NULL_Proportions$NA_proportion < 0.15) &
+  (is.na(NA_NULL_Proportions$NULL_proportion) | NA_NULL_Proportions$NULL_proportion < 0.15),
+])
+Env85 <- EnvNULL[colnames(EnvNULL) %in% Env85_cols]
+
+
+###work with this
+#rownames(Env85) <- Env_Full$sample
+#EnvCore <- Env_Full[!grepl("^UA|RU|BY|DK", rownames(Env85)), ]
+
+###check proportion now 
+ 
+### check samples NA proportion
+EnvNULLsamples <- as.data.frame(t(Env85)) #sample filter first: EnvNULLsamples <- as.data.frame(t(EnvNULL))
+
+colnames(EnvNULLsamples) <- rownames(Env85) #colnames(EnvNULLsamples) <- rownames(EnvNULL)
+
+
+NA_NULL__SAMPLE_Proportions <- data.frame(
+  NA_count = sapply(EnvNULLsamples, function(x) sum(is.na(x))),
+  NULL_count = sapply(EnvNULLsamples, function(x) sum(x == "NULL")),
+  NA_proportion = sapply(EnvNULLsamples,  function(x) sum(is.na(x)) / nrow(EnvNULLsamples)),
+  NULL_proportion = sapply(EnvNULLsamples, function(x) sum(x == "NULL") / nrow(EnvNULLsamples))
+)
+
+
+
+```
+
+``` {r NULLproportions, echo=TRUE}
+
+#kable(NA_NULL_Proportions)
+datatable(NA_NULL_Proportions, options = list(pageLength = 10, autoWidth = TRUE))
+
+``` 
+
+# Removing data columns where missing data is > 15% and samples(rows)  where missing data is >40%.
+
+
+``` {r AAARR, echo=FALSE}
+#remove samples that are over 0.15 missing
+#remove samples
+
+Env85_samples_cols <- rownames(NA_NULL__SAMPLE_Proportions[
+  (is.na(NA_NULL__SAMPLE_Proportions$NA_proportion) | NA_NULL__SAMPLE_Proportions$NA_proportion < 0.15) &
+  (is.na(NA_NULL__SAMPLE_Proportions$NULL_proportion) | NA_NULL__SAMPLE_Proportions$NULL_proportion < 0.15),
+])
+
+Env85 <-  Env85[rownames(Env85) %in% Env85_samples_cols,] ##Env85 <-  EnvNULL[rownames(EnvNULL) %in% Env85_samples_cols,] 
+EnvCore <- Env85
+##remove all ds_earthserver,era5??
+
+###check now again proptions of NULL VALUES
+#NA_NULL_Proportions_corr <- data.frame(
+#  NA_count = sapply(Env85, function(x) sum(is.na(x))),
+#  NULL_count = sapply(Env85, function(x) sum(x == "NULL")),
+#  NA_proportion = sapply(Env85,  function(x) sum(is.na(x)) / nrow(Env85)),
+#  NULL_proportion = sapply(Env85, function(x) sum(x == "NULL") / nrow(Env85))
+#)
+
+
+```
+
+```{r whatever}
+print("Number of variables left")
+ncol(EnvCore)
+print("Number of samples left")
+nrow(EnvCore)
+
+
+#non_monomorphic <- sapply(EnvCore, function(col) length(unique(col)) > 1)
+#EnvCore <- EnvCore[, non_monomorphic]
+#
+#
+#is_monomorphic <- function(column, threshold = 0.7) {
+#  column <- na.omit(column)
+#  value_counts <- table(column)
+#  max_proportion <- max(value_counts) / length(column)
+#  return(max_proportion >= threshold)
+#}
+#
+## Apply the function to each column of EnvCore_imputed
+#col_monomorphs <- apply(EnvCore, 2, function(column) is_monomorphic(column, threshold = 0.7))
+#EnvStats <- EnvCore[,!col_monomorphs]
+#EnvDataStats <- as.data.frame(lapply(EnvStats, as.numeric))
+#s <- t(summary(EnvDataStats))
+#write.table(s, file="/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/Cli#mateData/Stats/SummaryEnv.csv")
+
+```
+
+
+```{r addMetadata, echo=FALSE}
+metadata <- read.csv("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/Stats/metadata_corrected.csv", header=TRUE)
+metadata$Layer.Name <- gsub("monthly means","monthly.means", metadata$Layer.Name)
+```
+
+```{r DimensionsEnvAndHistogram, echo=FALSE, warning=FALSE}
+
+#EnvCore <- as.data.frame(lapply(EnvCore, as.numeric))
+#colnames(EnvCore) <- gsub("\\.y","", colnames(EnvCore))
+columns_to_impute_idw <- metadata$Layer.Name[metadata$Type=="Numeric"]
+
+
+df <- EnvCore[,colnames(EnvCore) %in% columns_to_impute_idw]
+# Transform Date to numeric for temporal calculations
+Date_num <- as.numeric(as.Date(EnvCore$datevals, format = "%Y-%m-%d"))
+df <- as.data.frame(cbind(Date_num,as.data.frame(lapply(df, as.numeric))))
+#df <- as.data.frame(lapply(EnvCore[,4:ncol(EnvCore)], as.numeric))
+#df$date <- EnvCore$date
+
+# Define a function for manual IDW interpolation
+manual_idw <- function(latitude, longitude, values, target_latitude, target_longitude, idp = 2) {
+  # Compute distances from target point to all other points
+  distances <- sqrt((latitude - target_latitude)^2 + (longitude - target_longitude)^2)
+  # Avoid division by zero by setting a very small minimum distance
+  distances[distances == 0] <- 1e-12
+  # Compute weights (inverse distance raised to the power of idp)
+  weights <- 1 / distances^idp
+  # Perform weighted mean
+  interpolated_value <- sum(weights * values, na.rm = TRUE) / sum(weights, na.rm = TRUE)
+  return(interpolated_value)
+}
+# Function to impute missing values for a single column
+impute_column <- function(df, col_name, idp = 2) {
+  for (i in seq_len(nrow(df))) {
+    if (is.na(df[i, col_name])) {
+      # Extract non-missing data
+      non_missing <- df[!is.na(df[[col_name]]), ]
+      # Perform IDW for the missing value
+      df[i, col_name] <- manual_idw(
+        latitude = non_missing$latitude,
+        longitude = non_missing$longitude,
+        values = non_missing[[col_name]],
+        target_latitude = df$latitude[i],
+        target_longitude = df$longitude[i],
+        idp = idp
+      )
+      #print(df[i, col_name])
+    }
+  }
+  return(df)
+}
+# List of columns to impute
+#columns_to_impute <- colnames(EnvCore[,4:ncol(EnvCore)])
+
+# Apply the imputation function to each column
+for (col in colnames(df)) {
+  df <- impute_column(df, col)
+}
+
+columns_to_impute_categoric <- metadata$Layer.Name[metadata$Type=="Categoric" | metadata$Type=="Uncertain" | metadata$Type=="Unknown"]
+
+replace_na_with_median <- function(x) {
+  row_median <- median(x, na.rm = TRUE)
+  x[is.na(x)] <- row_median
+  return(x)
+  }
+
+replace_na_with_mode <- function(x) {
+  row_mode <- modal(x, na.rm = TRUE)
+  x[is.na(x)] <- row_mode
+  return(x)
+  }
+
+categoric_data <- as.data.frame(lapply(EnvCore[,colnames(EnvCore) %in% columns_to_impute_categoric], as.numeric))
+categoric_imputed <- as.data.frame(lapply(categoric_data,replace_na_with_mode))
+
+EnvCore_imputed <- as.data.frame(cbind(df,categoric_imputed))
+
+#EnvCore_imputed <- df
+
+
+#EnvCore_imputed$date <- EnvCore$date
+
+#RasdaERA5 <- colnames(EnvCore_imputed[,34:42])
+#EnvCore_imputed <-  EnvCore_imputed[, !colnames(EnvCore_imputed) %in% RasdaERA5] 
+
+###again remove monomorphic
+non_monomorphic <- sapply(EnvCore_imputed, function(col) length(unique(col)) > 1)
+EnvCore_imputed <- EnvCore_imputed[, non_monomorphic]
+
+##check standard deviation
+
+#col_sd <- apply(EnvCore_imputed, 2, sd)
+
+#replace_na_with_median <- function(x) {
+#  row_median <- median(x, na.rm = TRUE)
+#  x[is.na(x)] <- row_median
+#  return(x)
+#  }
+
+#Env85_inter <- replace_na_with_median(Env85)
+#EnvCore_inputed <- as.data.frame(t(apply(EnvCore, 1, replace_na_with_median)))
+
+add_null_indicator <- function(df, col_name, null_values) {
+# Check if the specified column exists in the data frame
+if (!col_name %in% colnames(df)) {
+stop(paste("Column", col_name, "does not exist in the data frame."))
+}
+# Create a new column indicating if the value is in the null_values list
+new_col_name <- paste0(col_name, "_is_null")
+df[[new_col_name]] <- df[[col_name]] %in% null_values
+# Return the updated data frame
+return(df)
+}
+
+create_plot <- function(column, col_name) {
+  # List of patterns and replacements
+  patterns <- metadata$Layer.Name
+  replacements <- metadata$Short.Name
+  datatype <- metadata$Type
+  col_name_old <- col_name
+  dtype <- "Numeric"
+  ncat <- "Unknown"
+  valids <- ""
+  # Apply substitutions
+  #for (i in seq_along(patterns)) {
+  #  col_name <- gsub(patterns[i], replacements[i], col_name)
+  #  dtype <- datatype[i]
+  #}
+  for (i in seq_along(patterns)) {
+    if (grepl(patterns[i], col_name)) {  # Check if the pattern matches
+        col_name <- gsub(patterns[i], replacements[i], col_name)
+        dtype <- datatype[i]
+        ncat <- metadata$Categories[i]
+        valids <- metadata$Valid.Values[i]
+        break  # Stop after the first match, if only one match is expected
+    }
+  }
+  # Create a frequency table
+  freq_table <- as.data.frame(table(column))
+  tr <- replace_list[[col_name_old]][[1]]  # Extract null values for the column
+  colnames(freq_table) <- c("Value", "Frequency")
+  freq_table <- add_null_indicator(freq_table, "Value", c(tr, "NULL", "NA"))
+  print(dtype)
+  #if (nrow(freq_table) > 20) {  # Adjust threshold as needed
+  if (dtype == "Numeric" & nrow(freq_table) > 20 ){  
+  # If more than 10 unique values, create a histogram
+    ggplot(data.frame(Value = column), aes(x = Value, fill = as.factor(Value %in% tr))) +
+      geom_histogram(color = "black", alpha = 0.7) +
+      scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "#347e5b"),
+                        labels = c(paste("Unique Values:",nrow(freq_table), "\nNA Ratio:",round(sum(is.na(column))/ncol(DATA),3)), "Not Valid")) +
+      labs(title = paste(col_name), 
+           x = "Value", 
+           y = "Frequency", 
+           fill = paste(dtype, "Data Type")) +
+      theme_minimal()
+  } else {
+    # Otherwise, create a bar plot
+    ggplot(freq_table, aes(x = Value, y = Frequency, fill = Value_is_null)) +
+      geom_bar(stat = "identity", position = "dodge", color = "black") +
+      scale_fill_manual(values = c("TRUE" = "red", "FALSE" = "#347e5b"),
+                        labels = c(paste("Unique Values:",nrow(freq_table), "\nNA Ratio:",round(sum(is.na(column))/ncol(DATA),3),"\nMax Categories:", ncat, "\nValid Categories:", valids), "Not Valid")) +
+      labs(title = paste(col_name), 
+           x = "Value", y = "Frequency",
+           fill = paste(dtype, "Data Type")) +
+      theme_minimal()
+  }
+}
+
+
+    #DATA <- EnvCore_imputed
+    #plots <- lapply(names(DATA[,32:40]),function(col_name){create_plot(DATA[,32:40][[col_name]],     col_name) })
+    #grid.arrange(grobs = plots, ncol = 3, nrow = 3)
+
+
+EnvDataUse <- EnvCore_imputed
+
+#EnvDataUse <- as.data.frame(lapply(EnvDataUse, as.numeric))
+
+rownames(EnvDataUse) <- rownames(EnvCore_imputed)
+num_cols <- ncol(EnvDataUse)
+
+##and now remove very non-uniformusly distributed data
+###partially monoprphic rows
+
+#is_monomorphic <- function(column, threshold = 0.7) {
+#  column <- na.omit(column)
+#  value_counts <- table(column)
+#  max_proportion <- max(value_counts) / length(column)
+#  return(max_proportion >= threshold)
+#}
+
+# Apply the function to each column of EnvCore_imputed
+#col_monomorphs <- apply(EnvCore_imputed, 2, function(column) is_monomorphic(column, threshold = 0.7))
+
+
+#DATA <- EnvCore_imputed
+#DATA <- Env85[,4:ncol(Env85)]
+#DATA <- as.data.frame(lapply(Env85[,4:ncol(Env85)], as.numeric))
+#
+DATA <- EnvDataUse
+
+
+num_cols <- ncol(DATA)
+for (start in seq(1, num_cols, by = 12)) {
+  end <- min(start + 11, num_cols)  # Ensure the end does not exceed num_cols
+  print(paste(start,end, sep=""))
+  plots <- lapply(names(DATA[,start:end]), function(col_name) {
+    create_plot(DATA[,start:end][[col_name]], col_name) })
+  # Save plots to a PDF file
+  #pdf(file = sprintf("/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/Stats/ValidationAfterImputation/Validatio_after_Correction_and_Imputation_%d.pdf", start), width = 14, height = 11)
+  grid.arrange(grobs = plots, ncol = 3, nrow = 4)
+  dev.off()
+}
+
+
+```
+
+
+
+## Including Plots
+
+
+```{r pcaplot, fig.width=20, fig.height=14 , echo=FALSE}
+rownames(EnvCore_imputed) <- rownames(EnvCore)
+
+patterns <- metadata$Layer.Name
+replacements <- metadata$Short.Name
+
+# Functions
+get_meta_data <- function(csvfile) {
+  meta <- read.csv(csvfile, header = TRUE)
+  meta.sub <- meta %>% dplyr::select(sampleId, lat, long)
+  meta.sub$sampleId <- gsub("\\-", ".", meta.sub$sampleId)
+  return(meta.sub)
+}
+
+get_worldclim_data <- function(meta.sub) {
+  biod <- worldclim_global(var = "bio", 2.5, "data")
+  bio <- raster::extract(biod, cbind(meta.sub$long, meta.sub$lat))
+  bio.sub <- as.data.frame(bio)
+  return(bio.sub)
+}
+
+meta2024 <- "/home/ssteindl/mounts/BioMem_2/ssteindl/UC3/ClimateData/samples_europe_pass.csv"
+meta <- get_meta_data(meta2024)
+WC <- get_worldclim_data(meta)
+rownames(WC) <- gsub("\\.","-",meta$sampleId)
+
+ROWS <- WC[rownames(WC) %in% rownames(EnvCore),]
+colnames(ROWS) <- gsub("wc2.1_2.5m_b","B", colnames(ROWS))
+DATA <- as.data.frame(cbind(DATA, ROWS))
+rownames(DATA) <- rownames(EnvCore)
+
+names(DATA) <- sapply(names(DATA), function(x) {
+if (x %in% patterns) replacements[match(x, patterns)] else x
+})
+
+
+pr <- prcomp(DATA, scale. = TRUE)
+fviz_pca_biplot(pr)
+
+
+fviz_pca_var(pr, col.var = "contrib", gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), repel = TRUE)
+
+
+write.csv(DATA, file="/media/inter/ssteindl/FC/usecaserepo/SYNC0524/uc3-drosophola-genetics/projects/ClimateData/Env_imputed.csv")
+
+
+### plot the samples
+
+Coordinates <- 
+
+Coordinates$names <- rownames(Coordinates)
+colnames(Coordinates)
+
+# Get a world map
+world_map <- map_data("world")
+
+# Plot
+p <- ggplot() +
+    geom_map(data = world_map, map = world_map,
+             aes(x = long, y = lat, map_id = region),
+             fill = "lightgray", color = "white") +
+    geom_point(data = Coordinates, aes(x = Long, y = Lat), color = "#7aa444", size = 3) +
+    coord_fixed(1.3, xlim = c(-25, 45), ylim = c(35, 70)) + ggtitle(paste("Samples remained after filtering (",nrow(Coordinates),"): Strategy A", sep=""))
+    theme_minimal()
+
+
+
+``` 
+
+
+``` {r correlateData} 
+# Compute Pairwise Correlations
+correlations <- cor(DATA, use = "pairwise.complete.obs")
+#write.csv(correlations, file=paste0(outdir,"/correlations.csv"))
+# Convert to Data Frame
+correlations_df <- as.data.frame(as.table(correlations))
+
+# View the Result
+print(correlations_df)
+highly_corr <- correlations_df[abs(correlations_df$Freq) > 0.9 & abs(correlations_df$Freq) < 1, ]
+write.csv(correlations, file=paste0(outdir,"/high_correlations.csv"))
+
+
+
+
+## Filter Strategy B: Filter first for samples then for environemtnal variables
+
+NA_NULL__SAMPLE_Proportions <- data.frame(
+  NA_count = sapply(EnvNULL, function(x) sum(is.na(x))),
+  NULL_count = sapply(EnvNULL, function(x) sum(x == "NULL")),
+  NA_proportion = sapply(EnvNULL,  function(x) sum(is.na(x)) / nrow(EnvNULL)),
+  NULL_proportion = sapply(EnvNULL, function(x) sum(x == "NULL") / nrow(EnvNULL))
+)
+
+
+Env85_samples_cols <- rownames(NA_NULL__SAMPLE_Proportions[
+  (is.na(NA_NULL__SAMPLE_Proportions$NA_proportion) | NA_NULL__SAMPLE_Proportions$NA_proportion < 0.15) &
+  (is.na(NA_NULL__SAMPLE_Proportions$NULL_proportion) | NA_NULL__SAMPLE_Proportions$NULL_proportion < 0.15),
+])
+
+Samples85 <-  EnvNULL[colnames(EnvNULL) %in% Env85_samples_cols]
+
+NA_NULL_Proportions <- data.frame(
+  NA_count = sapply(Samples85, function(x) sum(is.na(x))),
+  NULL_count = sapply(Samples85, function(x) sum(x == "NULL")),
+  NA_proportion = sapply(Samples85,  function(x) sum(is.na(x)) / nrow(Samples85)),
+  NULL_proportion = sapply(Samples85, function(x) sum(x == "NULL") / nrow(Samples85))
+)
+
+Env85_strategyB_cols <- rownames(NA_NULL_Proportions[
+  (is.na(NA_NULL_Proportions$NA_proportion) | NA_NULL_Proportions$NA_proportion < 0.15) &
+  (is.na(NA_NULL_Proportions$NULL_proportion) | NA_NULL_Proportions$NULL_proportion < 0.15),
+])
+
+Env85_strategyB <- Samples85[colnames(Samples85) %in% Env85_strategyB_cols]
+
+
+#....
+
+``` 
+

@@ -205,9 +205,11 @@ Here are some of the key features of this project:
 - **Redundancy Analysis** – This is an R script applicable across various platforms and operating systems.
    - **Intersecting Data**
    - **Additional Data** -
-   - **Variable selection**
+   - **Variable selection** ordiR2step
    - **Variance partitioning** - 
-   - **Permutations** -
+   - **Permutations** 
+   - **Threshold**
+   - **GOterm analysis** 
 ---
 
 ## Results
