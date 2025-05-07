@@ -1,0 +1,8 @@
+Partial RDA models ,Inertia ,R2 ,p (>F),Explainable Variance,Total Variance,,,Proportion of totalVariance
+Full model: F ~ clim. + geog. + struct. ,"1.108,92","0,27","0,001","100,00","55,86",,1,"0,5586376199"
+Pure climate: F ~ clim. | (geog. + struct.),"375,84","0,06","0,001","33,89","18,93",,"0,3389269726","0,1893373573"
+Pure structure: F ~ struct. | (clim. + geog.),"189,38","0,05","0,001","17,08","9,54",,"0,1707783064","0,09540318664"
+Pure geography: F ~ geog. | (clim. + struct.),"41,70","0,01","0,001","3,76","2,10",,"0,037606755","0,0210085481"
+Confounded climate/structure/geography ,"501,99",,,"45,27","25,29",,"0,452687966","0,2528885279"
+Total unexplained,"876,12",,,"0,00","44,14",,,"0,4413623801"
+Total inertia,"1.985,04",,,"0,00","100,00",,,1

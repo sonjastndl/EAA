@@ -221,8 +221,9 @@ Here are some of the key features of this project:
    - [**Additional Filtering and Scaling**](scripts/RDA.R#L95-L104)
    - [**Variable selection with ordiR2step**](scripts/RDA.R#L131-L153)
    - [**Preparing additional data for partial RDAs**](scripts/RDA.R#L241-L291) - We follow an approach of conditioning in three additional models besides the full model (Geography, Climate, Population Structure). Preparing Coordinates as well as neutral SNPs for computing Population Structure. The first three axes of PCA on neutral SNPs used as Population Structure estimate.
-   - **Variance partitioning with partial RDAs** - 
-   - **Permutations** 
+   - [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - We combine the anova results of all pRDAs to obtain the [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv). 
+   - [**Association Analysis**]()
+   - [**Permutations**]() 
    - **Threshold**
    - **GOterm analysis** 
 
