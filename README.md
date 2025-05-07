@@ -205,13 +205,13 @@ Here are some of the key features of this project:
 > | Sample | 10% | Env | 10% | 276 | 86 | 19 | 105 |
 > 
 > 
->> ![Strategy A](results/processing/cleaning/Pops_StrategyA.png)
+>> ![Strategy A](results/processing/cleaning/Pops_StrategyA_1.png)
 >> ![Strategy B](results/processing/cleaning/Pops_StrategyB.png)
 > 
 > For the following analysis, Strategy-A was used and the remaining [Dataset](data/environmental/fairicube/Env_imputed.csv) was selected, which consisted of 141 layers for 179 Drosophila sampels.
 
 
-- **Redundancy Analysis** – This is an R script applicable across various platforms and operating systems.
+- **Redundancy Analysis** <br> See the [R script](scripts/RDA.R#L83) applicable across various platforms and operating systems.
    - **Intersecting Data**
    - **Additional Data** -
    - **Variable selection** ordiR2step
