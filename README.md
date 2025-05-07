@@ -197,7 +197,7 @@ Having correct and clean data is essential for reliable results.
 >
 > **Clean Up of Environmental Data involves:**
 >>  -  Analysis of Data (General Properties, Completeness, Distribution)
->>      ![Data Properties](results/processing/cleaning/ValidationAfterCleanUp/Validatio_before_Imputation_new_1.pdf)
+>>     [Data Properties](results/processing/cleaning/ValidationAfterCleanUp/Validatio_before_Imputation_new_1.pdf)
 >>  -  Removing non-unique variables 
 >>  -  Removing highly intercorrelated variables 
 >>  -  Removing variables with missing data above threshold 
