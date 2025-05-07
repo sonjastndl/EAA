@@ -106,6 +106,7 @@ echo "GETTING INTRONIC SNPs"
 get intronic SNPS
 
 ### DOWNLOAD GFF GILE ###
+wget http://ftp.flybase.net/genomes/Drosophila_melanogaster/current/gff/dmel-all-r6.57.gff.gz
 gff_file="${data}/dmel-all-r6.57.gff.gz"
 neutralSNPs="${results}/Subsampled_NeutralSNPS_80.tsv"
 echo "FILTERING INTRONIC SNPs"
@@ -129,51 +130,8 @@ python3 ${scriptdir}/VCF2AF.py --input $Sub4 > ${resultsdir}/Subsampled.final_DP
 python3 ${scriptdir}/VCF2AF.py --input $resultsdir/Subsampled_neutral.vcf.gz > ${resultsdir}/Neutral.final.af
 
 
-################################################## PERFORM LINEAR REGRESSION #################################################################
-echo "PERFORMING LINEAR REGRESSION"
-
-Rscript ${scriptdir}/Plot_pvalues.R $wd $AF $envdata $arm $summary
-
- 
-################################################## PERFORM LFMM 2 (LATENT FACTOR MIXED MODEL) ###################################################
-echo "PERFORMING LFMM"
-
-LeaOut="${resultsdir}/LEA"
-mkdir $LeaOut
-#
-variables=$(head -n 1 "$envdata" | sed 's/\r$//')
-#echo $variables
-##  #Use a for loop to iterate over words (assuming space-separated words)
-IFS=',' read -ra header_elements <<< "$variables"
-
-#Rscript /home/sonjastndl/s3/InstallLea.R
-##test
-#Rscript ${scriptdir}/LEA_RunLFMM2.R $LeaOut $AF $metadata_new "bio1" $rep
-
-#for ((i = 1; i < 3; i++)); do
-for ((i = 1; i < ${#header_elements[@]}; i++)); do
-    element=${header_elements[i]} 
-    echo "$element"
-    #echo $LeaOut
-    #echo $AF
-    rep=1
-    echo $rep
-    # Add your processing here
-    Rscript ${scriptdir}/LEA_RunLFMM2.R $LeaOut $AF $envdata $element $rep
-    #Rscript ${scriptdir}/LEA_RunLFMM2.R $LeaOut $AF $metadata_new "bio1" 1
-    #If needed average the Repetitions
-    #Rscript Rscript ${scriptdir}/LEA_ZPcalc.R $LeaOut $nK $nR $AF $var
-done
-
-Rscript ${scriptdir}/PlotLEAPValues.r $wd $AF $metadata_new $arm $summary
-
-Rscript ${scriptdir}/ComparePValues.R $AF ${resultsdir}/GM $LeaOut $summary
-
 #### RDA
-## Get Intronic SNPs
-#
-wget http://ftp.flybase.net/genomes/Drosophila_melanogaster/current/gff/dmel-all-r6.57.gff.gz
-#
+
 
 AF_file="${resultsdir}/Subsampled_fullgenome2.final_DP15.af"
 metadata="${wd}/dest_v2.samps_3May2024.csv"

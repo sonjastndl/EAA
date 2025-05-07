@@ -169,21 +169,23 @@ more $annotated | gunzip | awk ' !/^#/ {split($8,a,"|"); print $1 " " $2 " " a[4
 
 --- 
 
-## Project Workflow
+## Analysis Workflow
 
 <!--ts-->
 
-1. [Acquiring Data](#acquring-data)
-2. [Cleaning Data](#cleaning-data)
-2. [Redundancy Analysis](#redundancy-analysis)
+1.  [Acquiring Data](#acquring-data)
+2.  [Validating Data](#validating-data)
+3.  [Redundancy Analysis](#redundancy-analysis)
+
 
 <!--ts-->
 
 ### Acquiring Data 
 See in the chapter [Data](#data) above.
   
-### Cleaning Data
-Having clean data is essential for reliable results.
+### Validating Data
+
+Having correct and clean data is essential for reliable results.
   
 > **Clean Up of Genetic Data included:** 
 >>  -  Removing Low Quality Sites
@@ -194,15 +196,16 @@ Having clean data is essential for reliable results.
 >>      However in the course of the project, a method for imputing population genomic data at allele frequency level was developed: [see here](https://github.com/FAIRiCUBE/uc3-drosophola-genetics/tree/main/projects/gap_filling).) 
 >
 > **Clean Up of Environmental Data involves:**
->>  -  Analysis of Completeness of Data 
+>>  -  Analysis of Data (General Properties, Completeness, Distribution)
+>>      ![Data Properties](results/processing/cleaning/ValidationAfterCleanUp/Validatio_before_Imputation_new_1.pdf)
 >>  -  Removing non-unique variables 
 >>  -  Removing highly intercorrelated variables 
 >>  -  Removing variables with missing data above threshold 
->>  -  Impute missing data (We imputed categorial data by using the most common value, numerical data was imputed with inverse distance weighting in our [Rscript]().)
+>>  -  Impute missing data (We imputed categorial data by using the most common value, numerical data was imputed with inverse distance weighting in our script (see below).)
 >
 >
 >
-> When cleaning the data, we tested two approaches with different thresholds. You can see the entire CleanUp Strategy in our [Clean Up RMD file](results/processing/cleaning/Filter_Clean_Impute_Data.Rmd), a preview in the [Clean Up HTML](results/processing/cleaning/Filter_Clean_Impute_Data.html) and the corresponding esults in the [CleanUp Folder](results/processing/cleaning).
+> When validating the data, we tested two approaches with different thresholds. You can see the entire Valdiation and CleanUp Strategy in our [Clean Up RMD file](results/processing/cleaning/Filter_Clean_Impute_Data.Rmd), a preview in the [Clean Up HTML](results/processing/cleaning/Filter_Clean_Impute_Data.html) and the corresponding results in the [CleanUp Folder](results/processing/cleaning).
 
 
 > | Filter 1  | Filter 1 Threshold  | Filter 2  | Filter 2 Threshold | Populations | Env | WorldClim Env | Env Total | Total Imputed|
@@ -219,21 +222,21 @@ Having clean data is essential for reliable results.
 > For the following analysis, Strategy-A was used and the remaining [Dataset](data/environmental/fairicube/Env_imputed.csv) was selected, which consisted of 141 layers for 179 Drosophila sampels.
 
 
-- **Redundancy Analysis** 
-   <br> 
-   We chose RDA over unconstrained methods like PCA because we were specifically interested in explaining species variation using external variables, rather than exploring the data structure without context.
-   In summary, RDA provides a robust framework to link ecological patterns to environmental drivers, helping us interpret complex multivariate data in a meaningful, hypothesis-driven way.
+## Redundancy Analysis
 
-   <br> See the complete [R script](scripts/RDA.R) applicable across various platforms and operating systems or check the following sub sections.
-   - [**Intersecting Data**](scripts/RDA.R#L83-L85)
-   - [**Additional Filtering and Scaling**](scripts/RDA.R#L95-L104)
-   - [**Variable selection with ordiR2step**](scripts/RDA.R#L131-L153) - A method to reduce complexity of the model and find most influencal variables of the model. 
-   - [**Preparing additional data for partial RDAs**](scripts/RDA.R#L241-L291) - We follow an approach of conditioning in three additional models besides the full model (Geography, Climate, Population Structure). Preparing Coordinates as well as neutral SNPs for computing Population Structure. The first three axes of PCA on neutral SNPs used as Population Structure estimate.
-   - [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - We combine the anova results of all pRDAs to obtain the [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv). 
-   - [**Association Analysis**]()
-   - [**Permutations**]() 
-   - [**Threshold**]()
-   - [**GOterm analysis**]()
+We chose RDA over unconstrained methods like PCA because we were specifically interested in explaining speciesvariation using external variables, rather than exploring the data structure without context.
+In summary, RDA provides a robust framework to link ecological patterns to environmental drivers, helping us interpretcomplex multivariate data in a meaningful, hypothesis-driven way.
+See the complete [R script](scripts/RDA.R) applicable across various platforms and operating systems or check thefollowing sub sections.
+
+- [**Intersecting Data**](scripts/RDA.R#L83-L85)
+- [**Additional Filtering and Scaling**](scripts/RDA.R#L95-L104)
+- [**Variable selection with ordiR2step**](scripts/RDA.R#L131-L153) - A method to reduce complexity of the model andfind most influencal variables of the model. 
+- [**Preparing additional data for partial RDAs**](scripts/RDA.R#L241-L291) - We follow an approach of conditioning inthree additional models besides the full model (Geography, Climate, Population Structure). Preparing Coordinates aswell as neutral SNPs for computing Population Structure. The first three axes of PCA on neutral SNPs used as PopulationStructure estimate.
+- [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - We combine the anova results of all pRDAs to obtainthe [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv). 
+- [**Association Analysis**]()
+- [**Permutations**]() 
+- [**Threshold**]()
+- [**GOterm analysis**]()
 
 
 
