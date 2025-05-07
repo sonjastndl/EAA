@@ -211,11 +211,17 @@ Here are some of the key features of this project:
 > For the following analysis, Strategy-A was used and the remaining [Dataset](data/environmental/fairicube/Env_imputed.csv) was selected, which consisted of 141 layers for 179 Drosophila sampels.
 
 
-- **Redundancy Analysis** <br> See the [R script](scripts/RDA.R#L83) applicable across various platforms and operating systems.
-   - **Intersecting Data**
-   - **Additional Data** -
-   - **Variable selection** ordiR2step
-   - **Variance partitioning** - 
+- **Redundancy Analysis** 
+   <br> 
+   We chose RDA over unconstrained methods like PCA because we were specifically interested in explaining species variation using external variables, rather than exploring the data structure without context.
+   In summary, RDA provides a robust framework to link ecological patterns to environmental drivers, helping us interpret complex multivariate data in a meaningful, hypothesis-driven way.
+
+   <br> See the complete [R script](scripts/RDA.R) applicable across various platforms and operating systems or check the following sub sections.
+   - [**Intersecting Data**](scripts/RDA.R#L83-L85)
+   - [**Additional Filtering and Scaling**](scripts/RDA.R#L95-L104)
+   - [**Variable selection with ordiR2step**](scripts/RDA.R#L131-L153)
+   - [**Preparing additional data for partial RDAs**](scripts/RDA.R#L241-L291) - We follow an approach of conditioning in three additional models besides the full model (Geography, Climate, Population Structure). Preparing Coordinates as well as neutral SNPs for computing Population Structure. The first three axes of PCA on neutral SNPs used as Population Structure estimate.
+   - **Variance partitioning with partial RDAs** - 
    - **Permutations** 
    - **Threshold**
    - **GOterm analysis** 
