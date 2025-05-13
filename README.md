@@ -222,7 +222,7 @@ Having correct and clean data is essential for reliable results.
 >> ![Strategy A](results/processing/cleaning/Pops_StrategyA_1.png)
 >> ![Strategy B](results/processing/cleaning/Pops_StrategyB.png)
 > 
-> For the following analysis, Strategy-A was used and the remaining [Dataset](data/environmental/fairicube/Env_imputed.csv) was selected, which consisted of 141 layers for 179 Drosophila sampels.
+> For the following analysis, Strategy-A was used and the remaining [Dataset](data/environmental/fairicube/Env_imputed.csv) was selected, which consisted of 141 layers for 179 Drosophila samples.
 
 
 ## Redundancy Analysis
@@ -238,10 +238,8 @@ See the complete [R script](scripts/RDA.R) applicable across various platforms a
 - [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - We combine the anova results of all pRDAs to obtainthe [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv). 
 - [**Association Analysis**]()
 - [**Permutations**]() 
-- [**Threshold**]()
+- [**Thresholds and q-value filtering**]()
 - [**GOterm analysis**]()
-
-
 
 ---
 
