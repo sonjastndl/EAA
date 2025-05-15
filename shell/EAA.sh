@@ -120,7 +120,23 @@ python3 ${scriptdir}/IntronicSNPS.py \
 
 vcftools --gzvcf $Sub4 \
    --positions $neutralSNPs \
-   --recode --stdout | gzip > ${results}/Subsampled_neutral.vcf.gz
+   --recode --stdout | gzip > ${resultsdir}/Subsampled_neutral.vcf.gz
+
+
+################################################### ANNOTATING SNPS IN VCF FILE ############################################################
+
+
+
+#/usr/lib/jvm/java-11-openjdk-11.0.22.0.7-2.el8.x86_64/bin/java -jar /media/inter/ssteindl/DEST/DESTv1_Pipeline/shell/snpEff/snpEff.jar
+#
+module load Tools/snpEff   
+
+annotated="${resultsdir}/Subsampled_final_DP15.ann.vcf.gz"
+java  -jar $snpEff ann BDGP6.28.99 $Sub4 | gzip >> $annotated
+more $annotated | gunzip | awk ' !/^#/ {split($8,a,"|"); print $1 " " $2 " " a[4]}' > ${wd}/results/annotations.txt
+#awk 'NR==FNR{a[$1,$2]; next} ($1,$2) in a' ${wd}/results/${arm}/Subsampled_${arm}.final_DP15.af ${wd}/results/annotations.txt > ${wd}/results/annotated_used_frqs.txt
+
+
 
 ################################################### CONVERT TO ALLELE FREQUENCIES ############################################################
 #echo "CONVERTING VCF FILE TO ALLELE FREQUENCY FILE"

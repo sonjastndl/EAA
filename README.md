@@ -222,7 +222,7 @@ Having correct and clean data is essential for reliable results.
 >> ![Strategy A](results/processing/cleaning/Pops_StrategyA_1.png)
 >> ![Strategy B](results/processing/cleaning/Pops_StrategyB.png)
 > 
-> For the following analysis, Strategy-A was used and the remaining [Dataset](data/environmental/fairicube/Env_imputed.csv) was selected, which consisted of 141 layers for 179 Drosophila samples.
+> For the following analysis, Strategy-A was used and the remaining [Dataset](data/environmental/fairicube/Env_imputed.csv) was selected, which consisted of 141 layers for 179 Drosophila sampels.
 
 
 ## Redundancy Analysis
@@ -236,18 +236,96 @@ See the complete [R script](scripts/RDA.R) applicable across various platforms a
 - [**Variable selection with ordiR2step**](scripts/RDA.R#L131-L153) - A method to reduce complexity of the model andfind most influencal variables of the model. 
 - [**Preparing additional data for partial RDAs**](scripts/RDA.R#L241-L291) - We follow an approach of conditioning inthree additional models besides the full model (Geography, Climate, Population Structure). Preparing Coordinates aswell as neutral SNPs for computing Population Structure. The first three axes of PCA on neutral SNPs used as PopulationStructure estimate.
 - [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - We combine the anova results of all pRDAs to obtainthe [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv). 
+- [**Outlier Detection**]() 
 - [**Association Analysis**]()
 - [**Permutations**]() 
-- [**Thresholds and q-value filtering**]()
+- [**Threshold**]()
 - [**GOterm analysis**]()
+
+
 
 ---
 
 ## Results
 
+This section presents the outcomes of the statistical analyses conducted on the dataset. Each subsection outlines specific methods applied to understand patterns, relationships, and variance explained in the data.
 
-### Test First PLot
-![Correlation of Environemtnal Variables](results/RDA/partialRDA/plot/CorrelationEnv.png)
+### Intersecting Data
+
+To identify common patterns across multiple datasets, an intersection analysis was performed. Shared variables across datasets were isolated, allowing for the construction of a harmonized data matrix. This matrix was used in subsequent multivariate analyses. The intersection ensured consistency and comparability across analytical steps.
+
+### Variable selection with ordiR2step
+
+The ordiR2step function was applied to perform forward and backward selection of explanatory variables based on adjusted R² values. This step refined the model by retaining only the most relevant environmental or explanatory variables.
+
+The final model included the following variables:
+- PasHayMet_l
+- Bio_9
+- Bio_10
+- Date_num
+- S2L2AB01
+- Bio_1
+- Bio_4
+- mERA5snowD
+- Bio_18
+- "Bio_17
+- PO24d_l
+- Bio_11
+- AImH
+- AImP
+- POGly
+- Bio_8
+
+These variables explained a significant portion of the variation in the response data, supporting their ecological or experimental relevance.
+![Ordiplot colored by sample origin](results/RDA/ordiR2step/Ordiplot_Colored.png)
+![Ordiplot linearized for RDA1](results/RDA/ordiR2step/LinearPlot_RDA1.png)
+![Ordiplot linearized for RDA2](results/RDA/ordiR2step/LinearPlot_RDA2.png)
+
+
+These selected variables are analysed for correlation and displayed i a correlation heatmap.
+![Correlation Heatmap](results/RDA/ordiR2step/CorrelationEnv.png)
+
+### Variance partitioning with pRDAs
+
+Partial Redundancy Analysis (pRDA) was used to partition the variance in the response matrix among the selected explanatory variable groups. This analysis quantified how much variation could be attributed to each variable set individually, as well as their shared effects.
+
+Results showed that:
+- Full model: 56%
+  -  Pure effect of Climate: 19%
+  -  Pure effect of Population Structure: 10%
+  -  Pure effect of Geography: 2%
+  -  Shared variation: 25%
+- Unexplained variation: 44%
+
+
+
+> | Model                                  	| Inertia  | R²	| p (>F) | Proportion of Explainable Variance | Proportion of Total Variance |
+> |-------------------------------------------|----------|-------|--------|-------------------------------------|-------------------------------|
+> | Full model: F ~ clim. + geog. + struct.   | 1108.92  | 0.27  | 0.001  | 1.0000                          	| 0.5586                    	|
+> | Pure climate: F ~ clim. \| (geog. + struct.) | 375.84   | 0.06  | 0.001  | 0.3389                          	| 0.1893                    	|
+> | Pure structure: F ~ struct. \| (clim. + geog.) | 189.38   | 0.05  | 0.001  | 0.1708                          	| 0.0954                    	|
+> | Pure geography: F ~ geog. \| (clim. + struct.) | 41.70	| 0.01  | 0.001  | 0.0376                          	| 0.0210                    	|
+> | Confounded climate/structure/geography	| 501.99   |   	|    	| 0.4527                          	| 0.2529                    	|
+> | Total unexplained                     	| 876.12   |   	|    	|                                 	| 0.4414                    	|
+> | Total inertia                         	| 1985.04  |   	|    	|                                 	| 1.0000                    	|
+
+
+### Outlier Detection
+
+
+### Association Analysis
+To explore associations between key variables, correlation or co-occurrence analysis was conducted.
+This helped uncover potential relationships between environmental factors and species composition (or other response variables).
+
+  - Bonferroni Threshold
+
+  - Permutation Threshold (5 out of 100 > soon will be q value) 
+
+
+
+### Permutations
+
+Permutation tests were conducted to assess the statistical significance of the models and variable contributions. Each model was tested using [100] permutations, providing robust p-values for hypothesis testing.
 
 ## Resources
 

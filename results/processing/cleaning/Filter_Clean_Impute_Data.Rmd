@@ -335,7 +335,7 @@ create_plot <- function(column, col_name) {
   }
 }
 
-num_cols <- ncol(EnvCore)
+
 
 DATA <- EnvCore
 
