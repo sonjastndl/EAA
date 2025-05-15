@@ -229,16 +229,16 @@ Having correct and clean data is essential for reliable results.
 
 We chose RDA over unconstrained methods like PCA because we were specifically interested in explaining speciesvariation using external variables, rather than exploring the data structure without context.
 In summary, RDA provides a robust framework to link ecological patterns to environmental drivers, helping us interpretcomplex multivariate data in a meaningful, hypothesis-driven way.
-See the complete [R script](scripts/RDA.R) applicable across various platforms and operating systems or check thefollowing sub sections.
+See the complete [R script](scripts/RDA.R) applicable across various platforms and operating systems or check thefollowing sub sections. We followed an approach of [Capblancq](https://github.com/Capblancq/RDA-landscape-genomics) and reused scripts and custom functions to perform the analysis.
 
 - [**Intersecting Data**](scripts/RDA.R#L83-L85)
 - [**Additional Filtering and Scaling**](scripts/RDA.R#L95-L104)
 - [**Variable selection with ordiR2step**](scripts/RDA.R#L131-L153) - A method to reduce complexity of the model andfind most influencal variables of the model. 
 - [**Preparing additional data for partial RDAs**](scripts/RDA.R#L241-L291) - We follow an approach of conditioning inthree additional models besides the full model (Geography, Climate, Population Structure). Preparing Coordinates aswell as neutral SNPs for computing Population Structure. The first three axes of PCA on neutral SNPs used as PopulationStructure estimate.
 - [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - We combine the anova results of all pRDAs to obtainthe [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv). 
-- [**Outlier Detection**]() 
-- [**Association Analysis**]()
+- [**Outlier Detection**]()
 - [**Permutations**]() 
+- [**Association Analysis**]()
 - [**Threshold**]()
 - [**GOterm analysis**]()
 
@@ -268,7 +268,7 @@ The final model included the following variables:
 - Bio_4
 - mERA5snowD
 - Bio_18
-- "Bio_17
+- Bio_17
 - PO24d_l
 - Bio_11
 - AImH
@@ -285,32 +285,37 @@ These variables explained a significant portion of the variation in the response
 These selected variables are analysed for correlation and displayed i a correlation heatmap.
 ![Correlation Heatmap](results/RDA/ordiR2step/CorrelationEnv.png)
 
-### Variance partitioning with pRDAs
+### Permutations
 
-Partial Redundancy Analysis (pRDA) was used to partition the variance in the response matrix among the selected explanatory variable groups. This analysis quantified how much variation could be attributed to each variable set individually, as well as their shared effects.
+Permutation tests were conducted to assess the statistical significance of the models and variable contributions. Each model was tested using [100] permutations, providing robust p-values for hypothesis testing.
 
-Results showed that:
-- Full model: 56%
-  -  Pure effect of Climate: 19%
-  -  Pure effect of Population Structure: 10%
-  -  Pure effect of Geography: 2%
-  -  Shared variation: 25%
-- Unexplained variation: 44%
-
-
-
-> | Model                                  	| Inertia  | R²	| p (>F) | Proportion of Explainable Variance | Proportion of Total Variance |
-> |-------------------------------------------|----------|-------|--------|-------------------------------------|-------------------------------|
-> | Full model: F ~ clim. + geog. + struct.   | 1108.92  | 0.27  | 0.001  | 1.0000                          	| 0.5586                    	|
-> | Pure climate: F ~ clim. \| (geog. + struct.) | 375.84   | 0.06  | 0.001  | 0.3389                          	| 0.1893                    	|
-> | Pure structure: F ~ struct. \| (clim. + geog.) | 189.38   | 0.05  | 0.001  | 0.1708                          	| 0.0954                    	|
-> | Pure geography: F ~ geog. \| (clim. + struct.) | 41.70	| 0.01  | 0.001  | 0.0376                          	| 0.0210                    	|
-> | Confounded climate/structure/geography	| 501.99   |   	|    	| 0.4527                          	| 0.2529                    	|
-> | Total unexplained                     	| 876.12   |   	|    	|                                 	| 0.4414                    	|
-> | Total inertia                         	| 1985.04  |   	|    	|                                 	| 1.0000                    	|
+![selVar](results/RDA/permutations/VariableCountAll.png)
 
 
 ### Outlier Detection
+
+
+ - Maximum Association Method
+This is a method where loadings of SNPs in the ordination space are used to determine SNPs candidates for local adaptation. The cutoff is purely based on standard deviation cutoffs to determine two_tailed p-value thresholds. 
+STDeviation 3 -> two-tailed p-value = 0.0027 → 2161 SNPs
+STDeviation 3.5 → 1366 SNPs
+
+ - Adaptive Association Method
+ This method is performed by running the ["rdadapt"](results/RDA/src/rdadapt.R) function of the Capblancq repository where we used the same p value threshold as for the other approach (0.0027), leading to 1350 SNPs.
+
+If we use the Bonferroni corrected p-value threshold of 0.05 (threshold p = 0.05/n(loci))  only 27 loci remain.
+
+![Bonf Corrected Loci](results/RDA/association/RDA_SNPs.png)
+
+
+ - Top500 (500 smallest p-values) of permuted p values 
+
+ ![Pic](results/RDA/permutations/permuted_RDA_SNPs_T500.png)
+
+ ![Pic2](results/RDA/permutations/permuted_RDA_SNPs_T56.png)
+
+
+
 
 
 ### Association Analysis
@@ -321,11 +326,6 @@ This helped uncover potential relationships between environmental factors and sp
 
   - Permutation Threshold (5 out of 100 > soon will be q value) 
 
-
-
-### Permutations
-
-Permutation tests were conducted to assess the statistical significance of the models and variable contributions. Each model was tested using [100] permutations, providing robust p-values for hypothesis testing.
 
 ## Resources
 
