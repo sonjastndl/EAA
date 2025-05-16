@@ -271,6 +271,8 @@ The final model included the following variables:
 - Bio_8
 
 These variables explained a significant portion of the variation in the response data, supporting their ecological or experimental relevance.
+<br> 
+
 ![Ordiplot colored by sample origin](results/RDA/ordiR2step/Ordiplot_Colored.png)
 ![Ordiplot linearized for RDA1](results/RDA/ordiR2step/LinearPlot_RDA1.png)
 ![Ordiplot linearized for RDA2](results/RDA/ordiR2step/LinearPlot_RDA2.png)
@@ -278,6 +280,8 @@ These variables explained a significant portion of the variation in the response
 
 These selected variables are analysed for correlation and displayed i a correlation heatmap.
 ![Correlation Heatmap](results/RDA/ordiR2step/CorrelationEnv.png)
+
+---
 
 ### Permutations
 
@@ -288,7 +292,7 @@ Permutation tests were conducted to assess the statistical significance of the m
 ![selVar](results/RDA/permutations/VariableCountAll.png)
 
 
-
+---
 
 ### Variance partitioning with pRDAs
 
@@ -323,20 +327,22 @@ Results showed that:
 > | Total inertia                         	| 1985.04  |   	|    	|                                 	| 1.0000                    	|
 
 
-
+---
 
 ### Outlier Detection and Association Analysis
 
 
- - Maximum Association Method
-This is a method where loadings of SNPs in the ordination space are used to determine SNPs candidates for local adaptation. The cutoff is purely based on standard deviation cutoffs to determine two_tailed p-value thresholds. 
-STDeviation 3 -> two-tailed p-value = 0.0027 → 2161 SNPs
-STDeviation 3.5 → 1366 SNPs
+#### Maximum Association Method
+This is a method where loadings of SNPs in the ordination space are used to determine SNPs candidates for local adaptation. The cutoff is purely based on standard deviation cutoffs to determine two_tailed p-value thresholds.
+| STDeviation | two-tailed pvalue | SNPs |
+|----------------------------------------| 
+| 3 | 0.0027 | 2161 SNPs |
+| 3.5 | ? | 1366 SNPs |
 
 ![MaxAssoc](results/RDA/association/OutlierMaxAssoc3.png)
 
- - Adaptive Association Method
- This method is performed by running the ["rdadapt"](results/RDA/src/rdadapt.R) function of the Capblancq repository where we used the same p value threshold as for the other approach (0.0027), leading to 1350 SNPs.
+#### Adaptive Association Method
+This method is performed by running the ["rdadapt"](results/RDA/src/rdadapt.R) function of the Capblancq repository where we used the same p value threshold as for the other approach (0.0027), leading to 1350 SNPs.
 
 If we use the Bonferroni corrected p-value threshold of 0.05 (threshold p = 0.05/n(loci))  only 27 loci remain.
 
