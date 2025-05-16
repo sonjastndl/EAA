@@ -334,10 +334,11 @@ Results showed that:
 
 #### Maximum Association Method
 This is a method where loadings of SNPs in the ordination space are used to determine SNPs candidates for local adaptation. The cutoff is purely based on standard deviation cutoffs to determine two_tailed p-value thresholds.
-| STDeviation | two-tailed pvalue | SNPs |
-|----------------------------------------| 
-| 3 | 0.0027 | 2161 SNPs |
-| 3.5 | ? | 1366 SNPs |
+
+> | STDeviation | two-tailed pvalue | SNPs |
+> |-------------|-------------------|------| 
+> | 3 | 0.0027 | 2161 SNPs |
+> | 3.5 | ? | 1366 SNPs |
 
 ![MaxAssoc](results/RDA/association/OutlierMaxAssoc3.png)
 
