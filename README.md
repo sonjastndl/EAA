@@ -335,11 +335,6 @@ Results showed that:
 #### Maximum Association Method
 This is a method where loadings of SNPs in the ordination space are used to determine SNPs candidates for local adaptation. The cutoff is purely based on standard deviation cutoffs to determine two_tailed p-value thresholds.
 
-> | STDeviation | two-tailed pvalue | SNPs |
-> |-------------|-------------------|------| 
-> | 3 | 0.0027 | 2161 SNPs |
-> | 3.5 | ? | 1366 SNPs |
-
 ![MaxAssoc](results/RDA/association/OutlierMaxAssoc3.png)
 
 #### Adaptive Association Method
@@ -355,6 +350,18 @@ If we use the Bonferroni corrected p-value threshold of 0.05 (threshold p = 0.05
  ![Pic](results/RDA/permutations/permuted_RDA_SNPs_T500.png)
 
  ![Pic2](results/RDA/permutations/permuted_RDA_SNPs_T56.png)
+
+
+
+> | Model | Method |  STDeviation | two-tailed pvalue | SNPs |
+> |-------| -------------|-----|--------|-----------| 
+> | Original | Maximum ASsociation | 3   | 0.0027 | 2161 SNPs |
+> | Original | Maximum Association | 3.5 | ?      | 1366 SNPs |
+> | Original | Rdadapt             | NA  | 0.0027 | 1350      |
+> | Original | Rdadapt             | NA  | 0.05/n(loci) | 27  |
+> | Original | Top500              | NA  | NA           | 500 |
+> | Original | Top500 in <5% permutations | NA  | NA | 56  |
+> | Original | qvalue threshold | NA  | NA | ?  |
 
 ### GOTerm Analysis on remaining SNPs
 
