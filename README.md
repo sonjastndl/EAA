@@ -32,6 +32,8 @@ This is a standalone repository linking to other repository of the project work 
 
 ##  Hypothesis and Research Questions
 
+![Workflow1](data/graphics/Workflow1.png)
+
 Many research has been conducted on the model organism Drosophila melanogaster. This previous research and collaboration efforts led to the accumulation of genetic data of D. melanogaster from these worldwide populations. The [DEST](https://dest.bio/) (Drosophila Evolution over Space and Time) dataset is a valuable collection of genomic data from natural populations across multiple locations worldwide and multiple time points. 
 
 ---
@@ -44,12 +46,13 @@ Many research has been conducted on the model organism Drosophila melanogaster. 
 
 Studies on the environmental adaptation of the organism revealed that climate specific  variables like [temperature, rainfall, and wind](https://pubmed.ncbi.nlm.nih.gov/33350518/) are associated with genetic and phenotypic variations and therefore significant factors driving local adaptation in D. melanogaster populations.
 
-In this study, the researchers used BayPass, a genome-environment association tool that accounts for population structure when identifying genetic variants linked to environmental variables. BayPass models the covariance in allele frequencies across populations, allowing for robust detection of SNPs (single nucleotide polymorphisms) and TEs (transposable elements) associated with specific environmental factors. The analysis was performed on genomic data from 36 population samples of Drosophila melanogaster across Europe and North America, alongside 59 environmental variables, including temperature, rainfall, and wind.
-
-We are now interested in whether incorporating more populations, richer environmental data, and applying multivariate statistical methods like redundancy analysis (RDA) might yield different or more refined insights. RDA allows the simultaneous modeling of multiple environmental predictors, potentially capturing complex adaptive responses missed by univariate approaches like BayPass. This comparison could help clarify whether previous findings remain consistent under broader data and methodological scopes.
+In the study, the researchers used BayPass, a genome-environment association tool that accounts for population structure when identifying genetic variants linked to environmental variables. BayPass models the covariance in allele frequencies across populations, allowing for robust detection of SNPs (single nucleotide polymorphisms) and TEs (transposable elements) associated with specific environmental factors. The analysis was performed on genomic data from 36 population samples of Drosophila melanogaster across Europe and North America, alongside 59 environmental variables, including temperature, rainfall, and wind.
 
 
 ## Novel Aspects
+
+
+We are now interested in whether incorporating more populations, richer environmental data, and applying multivariate statistical methods like redundancy analysis (RDA) might yield different or more refined insights. RDA allows the simultaneous modeling of multiple environmental predictors, potentially capturing complex adaptive responses missed by univariate approaches like BayPass. This comparison could help clarify whether previous findings remain consistent under broader data and methodological scopes.
 
 
 --- 
@@ -230,7 +233,7 @@ See the complete [R script](scripts/RDA.R) applicable across various platforms a
 - [**Additional Filtering and Scaling**](scripts/RDA.R#L95-L104)
 - [**Variable selection with ordiR2step**](scripts/RDA.R#L131-L153) - A method to reduce complexity of the model andfind most influencal variables of the model. 
 - [**Preparing additional data for partial RDAs**](scripts/RDA.R#L241-L291) - We follow an approach of conditioning inthree additional models besides the full model (Geography, Climate, Population Structure). Preparing Coordinates aswell as neutral SNPs for computing Population Structure. The first three axes of PCA on neutral SNPs used as PopulationStructure estimate.
-- [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - We combine the anova results of all pRDAs to obtainthe [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv).
+- [**Variance partitioning with pRDAs**](scripts/RDA.R#L292-L415) - Control for confounding variables and isolate the effects of explanatory variables of interest to improve interpretability of environmental relationships by eliminating background noise. See results in the [Variance Partitioning Table](results/RDA/partialRDA/Rsquared/VariancePartitioning.csv).
 - [**Permutations**]() 
 - [**Outlier Detection and Association Analysis**]()
 - [**Threshold**]()
@@ -291,6 +294,7 @@ Permutation tests were conducted to assess the statistical significance of the m
 ![SelVar1](results/RDA/permutations/VariableCount.png)
 ![selVar](results/RDA/permutations/VariableCountAll.png)
 
+We also ran the original "best" model than 100 times and saved the resulting p-values for each loci, script accessible [here.](scripts/TestPermutedPvalues.R)
 
 ---
 
@@ -331,6 +335,7 @@ Results showed that:
 
 ### Outlier Detection and Association Analysis
 
+To detect outliers, an RDA was performed again as climatic model (Environment + Geogrpahy) and Population Strucutre as conditioning factor. The resulting RDA was used for the following analysis.
 
 #### Maximum Association Method
 This is a method where loadings of SNPs in the ordination space are used to determine SNPs candidates for local adaptation. The cutoff is purely based on standard deviation cutoffs to determine two_tailed p-value thresholds.
@@ -373,11 +378,15 @@ GO:0005886	0,556	1	0,4289110000	1,0000000000	1	945	1354	plasma membrane	fbgn0000
 
 ## Resources
 
-Make sure you have the following installed:
+Make sure you have the following programs installed:
+
+### Necessary
 
 - [Python](https://www.python.org/)
 - [VCFTools](http://vcftools.github.io/license.html)
 - [vegan R-Package](https://www.bioconductor.org/packages/release/bioc/html/LEA.html)
+
+### Additional
 
 
 ### Closing Remarks

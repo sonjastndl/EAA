@@ -273,7 +273,7 @@ png(filename = paste0(outdir,"/populationStructure/Screeplot_PopStructure.png"),
 screeplot(pca_neutral, type="barplot")
 dev.off()
 
-#here first three are enogh to descirbe neutral population genetic structure??
+#here first three are enough to descirbe neutral population genetic structure??
 PCs_neutral <- scores(pca_neutral, choices=c(1:3), display="sites", scaling=0)
 PopStruct <- data.frame(Population = rownames(AllFreq_neutral), PCs_neutral)
 
@@ -348,8 +348,6 @@ write.csv(A, file=paste0(outdir,"/partialRDA/anova/Anova_clim.csv"))
 png(filename = paste0(outdir,"/partialRDA/plot/pRDA_climate.png"), width = 800, height = 600)
 plot(pRDAclim)
 dev.off()
-
-
 
 ### SUBMODEL 2: POPULATION STRUCTURE MODEL
 
